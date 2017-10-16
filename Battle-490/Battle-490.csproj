@@ -237,8 +237,10 @@
     <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\randomParticleRotation.cs" />
     <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
     <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
-    <Compile Include="Assets\Resources\Scripts\ProtoContrl.cs" />
-    <Compile Include="Assets\Resources\Scripts\ProtoMove.cs" />
+    <Compile Include="Assets\Scripts\BlinkingArea.cs" />
+    <Compile Include="Assets\Scripts\ProtoContrl.cs" />
+    <Compile Include="Assets\Scripts\ProtoMove.cs" />
+    <Compile Include="Assets\Tests\TestSetups.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\OpenSans\License!.txt" />

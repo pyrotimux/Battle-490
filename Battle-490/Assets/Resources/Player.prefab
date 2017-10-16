@@ -53,6 +53,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movarea: {fileID: 1977442637632702, guid: 39ddaa22ad8b55c4b9cefb1bddf1d619, type: 2}
+  moveablearea: {fileID: 0}
+  toons:
+  - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
+  - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}
+  - {fileID: 1511126989594428, guid: e0e1dddba87483543903e0312c50a2f6, type: 2}
+  pname: Player 1
+  pcolor: {r: 1, g: 1, b: 1, a: 1}
+  playerstr: 1111111
 --- !u!114 &114673798784318110
 MonoBehaviour:
   m_ObjectHideFlags: 1

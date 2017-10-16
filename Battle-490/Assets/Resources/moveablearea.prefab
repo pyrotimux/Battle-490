@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33025930633617318}
   - component: {fileID: 23040355822095164}
   - component: {fileID: 65601858968729174}
+  - component: {fileID: 114636814092173444}
+  - component: {fileID: 114302659704608930}
   m_Layer: 0
   m_Name: moveablearea
   m_TagString: Untagged
@@ -95,3 +97,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114302659704608930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977442637632702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d7730876d3144dab42308b09a6601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114636814092173444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977442637632702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 57
+    i1: 221
+    i2: 170
+    i3: 34
+    i4: 173
+    i5: 139
+    i6: 85
+    i7: 196
+    i8: 185
+    i9: 206
+    i10: 251
+    i11: 27
+    i12: 221
+    i13: 241
+    i14: 214
+    i15: 25
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
