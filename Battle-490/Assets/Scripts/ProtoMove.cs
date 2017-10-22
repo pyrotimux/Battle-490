@@ -5,18 +5,38 @@ using UnityEngine.Networking;
 
 public class ProtoMove : NetworkBehaviour {
     public bool selected;
+    public int startpos = 0; 
+    public int speed = 10;
+    private bool delayed = true;
+
+    [SyncVar]
     public Vector3 moveto;
-    public int startpos = 0, owner = 0;
 
-    private Vector3 movingto;
+    [SyncVar]
+    public string owner = "";
 
-	// Use this for initialization
-	void Start () {
+    [SyncVar]
+    public bool canattack = false;
+
+    [SyncVar]
+    public bool canmove = false;
+
+    // Use this for initialization
+    void Start () {
+        StartCoroutine(DelayStart(2));
+    }
+
+    public IEnumerator DelayStart(float time)
+    {
+        yield return new WaitForSeconds(time);
+        delayed = false;
         moveto = transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void LateUpdate () {
+        if (delayed) return;
         if (selected)
         {
             GetComponent<Renderer>().material.color = Color.red;
@@ -25,12 +45,14 @@ public class ProtoMove : NetworkBehaviour {
             GetComponent<Renderer>().material.color = Color.white;
         }
 
-        movingto = new Vector3(moveto.x, moveto.y, moveto.z);
-        if (Vector3.Distance(transform.position, movingto) > 0.5f) {
-            transform.position = Vector3.Lerp(transform.position, movingto, Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, moveto) > 0.5f) {
+            //transform.position = Vector3.Lerp(transform.position, movingto, Time.deltaTime);
+            transform.LookAt(moveto);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
         else {
-            transform.position = movingto;
+            transform.position = moveto;
         }
         
     }

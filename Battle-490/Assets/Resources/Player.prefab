@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114673798784318110}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,9 +58,10 @@ MonoBehaviour:
   - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
   - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}
   - {fileID: 1511126989594428, guid: e0e1dddba87483543903e0312c50a2f6, type: 2}
+  sltobj: {fileID: 0}
   pname: Player 1
   pcolor: {r: 1, g: 1, b: 1, a: 1}
-  playerstr: 1111111
+  myturn: 0
 --- !u!114 &114673798784318110
 MonoBehaviour:
   m_ObjectHideFlags: 1

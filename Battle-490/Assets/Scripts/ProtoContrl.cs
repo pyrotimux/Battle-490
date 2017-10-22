@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class ProtoContrl : NetworkBehaviour {
     private Vector3 hitpos;
-    private ProtoMove sltobj;
     public GameObject movarea, moveablearea;
     public GameObject[] toons;
+    public ProtoMove sltobj;
+    private GameObject canvas;
+    private bool setal = false; 
+
 
     [SyncVar]
     public string pname = "Player 1";
@@ -16,25 +20,68 @@ public class ProtoContrl : NetworkBehaviour {
     public Color pcolor = Color.white;
 
     [SyncVar]
-    public string playerstr = "1111111"; 
+    public bool myturn = false; 
 
-    void SpawnToons() {
-        for (int i = 0; i < 3; i++) {
-            GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 + transform.up * 1, Quaternion.identity);
+    [Command]
+    void CmdSpawn(string pname)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 vect = new Vector3(transform.position.x + (i * 10), 2f, transform.position.z);
+            GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 * (i+1) + transform.up * 1, Quaternion.identity);
             NetworkServer.Spawn(curtoon);
             ProtoMove m = curtoon.GetComponent<ProtoMove>();
-            if (isLocalPlayer) { m.owner = 1; m.startpos = (i * 2) + 1; }
+            m.owner = pname; m.startpos = (i * 2) + 1;
         }
-        
     }
 
-	// Use this for initialization
-	void Start () {
+    [Command]
+    void CmdMove(Vector3 hit)
+    {
+        sltobj.moveto = hit;
+        sltobj.canmove = false;
+    }
+
+    [Command]
+    void CmdSelected(GameObject slt ,bool b)
+    {
+        sltobj = slt.GetComponent<ProtoMove>();
+        sltobj.selected = b;
+    }
+
+    [Command]
+    void CmdDeselected(bool b)
+    {
+        sltobj.selected = b;
+    }
+
+    [Command]
+    void CmdSpawnMat()
+    {
+        GameObject m  = (GameObject)Instantiate(movarea, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
+        NetworkServer.Spawn(m);
+        moveablearea = m;
+    }
+
+    [Command]
+    void CmdDestroyMat(GameObject obj)
+    {
+        NetworkServer.Destroy(obj);
+    }
+
+    [Command]
+    void CmdEndTurn()
+    {
+        myturn = false;
+    }
+
+    void Start () {
         if (isLocalPlayer)
         {
             Camera.main.transform.position = this.transform.position;
             Camera.main.transform.rotation = this.transform.rotation;
-            SpawnToons();
+            CmdSpawn(pname);
+            canvas = GameObject.Find("Canvas");
         }
 
         
@@ -43,30 +90,33 @@ public class ProtoContrl : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (!isLocalPlayer) return;
-        if (Input.GetMouseButtonDown(0) && playerstr[0].CompareTo('1') == 0) {
+        if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) { canvas.SetActive(true); setal = true; }
+        
+        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn();
+        
+
+        if (CrossPlatformInputManager.GetButton("Fire1")) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.name.StartsWith("toon"))
                 {
-                    if (moveablearea) NetworkServer.Destroy(moveablearea);
-                    if (sltobj) sltobj.selected = false;
+                    if (moveablearea) CmdDestroyMat(moveablearea);
+                    if (sltobj) CmdDeselected(false);
                     sltobj = hit.transform.GetComponent<ProtoMove>();
-                    if (sltobj.owner == 1 && playerstr[sltobj.startpos].CompareTo('1') == 0) {
-                        sltobj.selected = true;
-                        moveablearea = (GameObject)Instantiate(movarea, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
-                        NetworkServer.Spawn(moveablearea);
+                    if (sltobj.owner == pname && sltobj.canmove) {
+                        if (sltobj) CmdSelected(hit.transform.gameObject, true);
+
+                        CmdSpawnMat();
                     }
                     
                 }
-                else if(hit.transform.name.StartsWith("moveablearea")) 
+                else if(hit.transform.name.StartsWith("moveablearea") && sltobj.canmove) 
                 {
-                    sltobj.moveto = hit.point;
-                    NetworkServer.Destroy(hit.transform.gameObject);
-                    Debug.Log(playerstr);
-                    playerstr = playerstr.Substring(0, sltobj.startpos) + "0" + playerstr.Substring(sltobj.startpos + 1);
-                    Debug.Log(playerstr);
+                    CmdMove(hit.point);
+                    CmdDestroyMat(hit.transform.gameObject);
+
                 }
 
             }
