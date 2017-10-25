@@ -27,7 +27,6 @@ public class ProtoContrl : NetworkBehaviour {
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector3 vect = new Vector3(transform.position.x + (i * 10), 2f, transform.position.z);
             GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 * (i+1) + transform.up * 1, Quaternion.identity);
             NetworkServer.Spawn(curtoon);
             ProtoMove m = curtoon.GetComponent<ProtoMove>();

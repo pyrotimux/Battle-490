@@ -246,6 +246,7 @@
     <Compile Include="Assets\Scripts\BlinkingArea.cs" />
     <Compile Include="Assets\Scripts\GameMgr.cs" />
     <Compile Include="Assets\Scripts\LobHooks.cs" />
+    <Compile Include="Assets\Scripts\MenuFunction.cs" />
     <Compile Include="Assets\Scripts\ProtoContrl.cs" />
     <Compile Include="Assets\Scripts\ProtoMove.cs" />
     <Compile Include="Assets\Tests\TestSetups.cs" />
