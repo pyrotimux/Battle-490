@@ -39,10 +39,16 @@ public class ProtoMove : NetworkBehaviour {
         if (delayed) return;
         if (selected)
         {
-            GetComponent<Renderer>().material.color = Color.red;
+            //GetComponent<Renderer>().material.color = Color.red;
+            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in rends)
+                r.material.color = Color.red;
         }
         else {
-            GetComponent<Renderer>().material.color = Color.white;
+            //GetComponent<Renderer>().material.color = Color.white;
+            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in rends)
+                r.material.color = Color.white;
         }
 
 

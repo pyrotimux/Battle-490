@@ -64,9 +64,13 @@ public class ProtoContrl : NetworkBehaviour {
     }
 
     [Command]
-    void CmdDestroyMat(GameObject obj)
+    void CmdDestroyMat()
     {
-        NetworkServer.Destroy(obj);
+        GameObject[] grounds = GameObject.FindGameObjectsWithTag("moveablegrounds");
+        foreach (GameObject g in grounds)
+        {
+            NetworkServer.Destroy(g);
+        }
     }
 
     [Command]
@@ -102,7 +106,7 @@ public class ProtoContrl : NetworkBehaviour {
             {
                 if (hit.transform.name.StartsWith("toon"))
                 {
-                    if (moveablearea) CmdDestroyMat(moveablearea);
+                    if (moveablearea) CmdDestroyMat();
                     if (sltobj) CmdDeselected(false);
                     sltobj = hit.transform.GetComponent<ProtoMove>();
                     if (sltobj.owner == pname && sltobj.canmove) {
@@ -115,7 +119,7 @@ public class ProtoContrl : NetworkBehaviour {
                 else if(hit.transform.name.StartsWith("moveablearea") && sltobj.canmove) 
                 {
                     CmdMove(hit.point);
-                    CmdDestroyMat(hit.transform.gameObject);
+                    CmdDestroyMat();
 
                 }
 
