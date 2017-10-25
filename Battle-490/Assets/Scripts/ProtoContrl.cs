@@ -30,7 +30,7 @@ public class ProtoContrl : NetworkBehaviour {
             GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 * (i+1) + transform.up * 1, Quaternion.identity);
             NetworkServer.Spawn(curtoon);
             ProtoMove m = curtoon.GetComponent<ProtoMove>();
-            m.owner = pname; m.startpos = (i * 2) + 1;
+            m.owner = pname; m.startpos = (i * 2) + 1; m.pcolor = pcolor;
         }
     }
 

@@ -21,6 +21,9 @@ public class ProtoMove : NetworkBehaviour {
     [SyncVar]
     public bool canmove = false;
 
+    [SyncVar]
+    public Color pcolor = Color.white;
+
     // Use this for initialization
     void Start () {
         StartCoroutine(DelayStart(2));
@@ -48,7 +51,7 @@ public class ProtoMove : NetworkBehaviour {
             //GetComponent<Renderer>().material.color = Color.white;
             Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
             foreach (Renderer r in rends)
-                r.material.color = Color.white;
+                r.material.color = pcolor;
         }
 
 
