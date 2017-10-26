@@ -4,6 +4,11 @@ using UnityEngine;
 using Prototype.NetworkLobby;
 using UnityEngine.Networking;
 
+
+/// <summary>
+/// this help player customization from lobby to be applied on our player class.
+/// </summary>
+/// 
 public class LobHooks : LobbyHook {
 
     public override void OnLobbyServerSceneLoadedForPlayer(NetworkManager manager, GameObject lobbyPlayer, GameObject gamePlayer)

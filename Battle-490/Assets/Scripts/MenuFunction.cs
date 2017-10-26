@@ -1,12 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
+/// <summary>
+/// this class handles menu events dispatch by the buttons 
+/// </summary>
+/// 
 public class MenuFunction : MonoBehaviour
 {
 
+    /// <summary>
+    /// all the buttons that could be referenced.
+    /// </summary>
     GameObject gomain, godirect, gomatch, goback, gobut;
 
+    /// <summary>
+    /// this function init button to vars by traversing from parent.
+    /// </summary>
     public void InitButton()
     {
         gomain = GameObject.Find("MainPanel");
@@ -16,11 +27,17 @@ public class MenuFunction : MonoBehaviour
         gobut = gomain.transform.GetChild(3).gameObject;
     }
 
+    /// <summary>
+    /// quit the application on button pressed.
+    /// </summary>
     public void Button_Quit()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// show direct play panel on button pressed.
+    /// </summary>
     public void Button_Show_DirectPlay()
     {
         InitButton();
@@ -29,6 +46,9 @@ public class MenuFunction : MonoBehaviour
         gobut.SetActive(false);
     }
 
+    /// <summary>
+    /// show match make panel on button pressed.
+    /// </summary>
     public void Button_Show_MatchMake()
     {
         InitButton();
@@ -37,6 +57,9 @@ public class MenuFunction : MonoBehaviour
         gobut.SetActive(false);
     }
 
+    /// <summary>
+    /// handle back action on button pressed.
+    /// </summary>
     public void Button_Show_Back()
     {
         InitButton();
@@ -44,5 +67,22 @@ public class MenuFunction : MonoBehaviour
         gomatch.SetActive(false);
         goback.SetActive(false);
         gobut.SetActive(true);
+    }
+
+    /// <summary>
+    /// presses the endturn button down 
+    /// </summary>
+    public void Button_End_Turn_Down()
+    {
+        CrossPlatformInputManager.SetButtonDown("endturn");
+    }
+
+
+    /// <summary>
+    /// presses the endturn button up 
+    /// </summary>
+    public void Button_End_Turn_Up()
+    {
+        CrossPlatformInputManager.SetButtonUp("endturn");
     }
 }

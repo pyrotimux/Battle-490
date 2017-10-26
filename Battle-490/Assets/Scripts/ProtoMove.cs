@@ -3,32 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// this class handles all toon movement and interactions.
+/// </summary>
+/// 
 public class ProtoMove : NetworkBehaviour {
-    public bool selected;
-    public int startpos = 0; 
-    public int speed = 10;
-    private bool delayed = true;
+    public bool selected; // if toon is selected
+    public int speed = 10; // speed my toon is moving
+    private bool delayed = true; // delay so toon doesnt bounce
 
     [SyncVar]
-    public Vector3 moveto;
+    public Vector3 moveto; // tell toons where to go 
 
     [SyncVar]
-    public string owner = "";
+    public string owner = ""; // which player own me?
 
     [SyncVar]
-    public bool canattack = false;
+    public bool canattack = false; // i can attack
 
     [SyncVar]
-    public bool canmove = false;
+    public bool canmove = false; // i can move
 
     [SyncVar]
-    public Color pcolor = Color.white;
+    public Color pcolor = Color.white; // my toon color 
 
     // Use this for initialization
     void Start () {
         StartCoroutine(DelayStart(2));
     }
 
+    // late init so it can be alive and gravity kicks in first.
     public IEnumerator DelayStart(float time)
     {
         yield return new WaitForSeconds(time);
@@ -39,24 +43,22 @@ public class ProtoMove : NetworkBehaviour {
 
     // Update is called once per frame
     void LateUpdate () {
-        if (delayed) return;
-        if (selected)
+        if (delayed) return; // only start after init.
+        if (selected) // if i am selected then i am red or else i am set player color.
         {
-            //GetComponent<Renderer>().material.color = Color.red;
             Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
             foreach (Renderer r in rends)
                 r.material.color = Color.red;
         }
         else {
-            //GetComponent<Renderer>().material.color = Color.white;
             Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
             foreach (Renderer r in rends)
                 r.material.color = pcolor;
         }
 
-
+        // if i am far from where i am moving to then look at it and keep moving. 
+        // once i am close enough then froce set the position. 
         if (Vector3.Distance(transform.position, moveto) > 0.5f) {
-            //transform.position = Vector3.Lerp(transform.position, movingto, Time.deltaTime);
             transform.LookAt(moveto);
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
