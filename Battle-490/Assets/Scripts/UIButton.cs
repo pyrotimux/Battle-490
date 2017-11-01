@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class UIButton : MonoBehaviour {
 
@@ -19,9 +20,11 @@ public class UIButton : MonoBehaviour {
 
     public void End_Turn_Button_Down()
     {
+        CrossPlatformInputManager.SetButtonDown("endturn");
+        /*
         Input.GetKeyDown("e");
         Debug.Log("End Turn pressed!");
-        
+        */
     }
 
     /*
