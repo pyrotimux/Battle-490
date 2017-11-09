@@ -46,7 +46,8 @@ public class ProtoContrl : NetworkBehaviour {
     void CmdMove(Vector3 hit)
     {
         sltobj.moveto = hit;
-        sltobj.canmove = false;
+        
+        
     }
 
     /// <summary>select toons</summary>

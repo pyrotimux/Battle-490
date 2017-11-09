@@ -10,7 +10,8 @@ using UnityEngine.Networking;
 public class ProtoMove : NetworkBehaviour {
     public bool selected; // if toon is selected
     public int speed = 10; // speed my toon is moving
-    private bool delayed = true; // delay so toon doesnt bounce
+    private bool delayed = true, justset = false; // delay so toon doesnt bounce
+
 
     [SyncVar]
     public Vector3 moveto; // tell toons where to go 
@@ -41,6 +42,7 @@ public class ProtoMove : NetworkBehaviour {
 
     }
 
+
     // Update is called once per frame
     void LateUpdate () {
         if (delayed) return; // only start after init.
@@ -58,12 +60,12 @@ public class ProtoMove : NetworkBehaviour {
 
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
-        if (Vector3.Distance(transform.position, moveto) > 0.5f) {
-            transform.LookAt(moveto);
+        if (Vector3.Distance(transform.position, moveto) > 2f) {
+            if (canmove) { transform.LookAt(moveto); canmove = false; justset = true; }
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        else {
-            transform.position = moveto;
+        else if(justset){
+            transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
         }
         
     }
