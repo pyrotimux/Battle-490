@@ -11,6 +11,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class ProtoContrl : NetworkBehaviour {
     private Vector3 hitpos; // where raycast hit occur
     public GameObject movarea, moveablearea; // movablearea stuff
+    public GameObject atkarea, attackingarea; // attacking stuff
     public GameObject[] toons; // toons that i control
     public ProtoMove sltobj; // obj that is currently selected
     private GameObject canvas; // this show gui if it's my turn
@@ -69,10 +70,11 @@ public class ProtoContrl : NetworkBehaviour {
     }
 
     /// <summary>spawn moveable area</summary>
+    /// <param name="mat"> the material that wanted to be spawned (?) </param>
     [Command]
-    void CmdSpawnMat()
+    void CmdSpawnMat(GameObject mat)
     {
-        GameObject m  = (GameObject)Instantiate(movarea, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
+        GameObject m  = (GameObject)Instantiate(mat, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
         NetworkServer.Spawn(m);
         moveablearea = m;
     }
@@ -133,7 +135,16 @@ public class ProtoContrl : NetworkBehaviour {
                     if (sltobj.owner == pname && sltobj.canmove) { // if it is a toon that i can control
                         if (sltobj) CmdSelected(hit.transform.gameObject, true); // then select that toon. 
 
-                        CmdSpawnMat(); // spawn moveable area
+                        if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
+                        {
+                            CmdSpawnMat(movarea); // spawn moveable area
+                        }
+
+                        if (CrossPlatformInputManager.GetButton("attack")) //if we click on ui button attack (?)
+                        {
+                            CmdSpawnMat(atkarea); //spawn attacking area (?)
+                        }
+                        
                     }
                     
                 }
