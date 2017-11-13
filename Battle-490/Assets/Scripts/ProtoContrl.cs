@@ -90,6 +90,11 @@ public class ProtoContrl : NetworkBehaviour {
         }
     }
 
+    [Command]
+    void CmdDestroyGameObject(GameObject go) {
+        NetworkServer.Destroy(go);
+    }
+
     /// <summary>end player turn.</summary>
     [Command]
     void CmdEndTurn()
@@ -143,12 +148,15 @@ public class ProtoContrl : NetworkBehaviour {
                 {
                     if (moveablearea || attackingarea) CmdDestroyMat(); // destroy previous spawn move areas
                     if (sltobj) CmdDeselected(false); // deselect all toons
-                    sltobj = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
-                    if (sltobj.owner == pname && (sltobj.canmove || sltobj.canattack)) { // if it is a toon that i can control
-                        if (sltobj) CmdSelected(hit.transform.gameObject, true); // then select that toon. 
+                    ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
+
+                    if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
+                        CmdSelected(hit.transform.gameObject, true); // then select that toon. 
                         
-                    }else if(sltobj.owner != pname){
-                        
+                    }else if(hitpm.owner != pname){
+                        Vector3 temp = hitpm.moveto;
+                        CmdDestroyGameObject(hitpm.gameObject);
+                        CmdMove(temp);
                     }
                     
                 }
