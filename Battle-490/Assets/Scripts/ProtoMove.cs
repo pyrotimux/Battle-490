@@ -23,6 +23,9 @@ public class ProtoMove : NetworkBehaviour {
     public bool canattack = false; // i can attack
 
     [SyncVar]
+    public bool canbeattack = false; // someone can attack me
+
+    [SyncVar]
     public bool canmove = false; // i can move
 
     [SyncVar]
@@ -40,6 +43,30 @@ public class ProtoMove : NetworkBehaviour {
         delayed = false;
         moveto = transform.position;
 
+    }
+
+    /// <summary>deselect toons</summary>
+    /// <param name="b"> bool that select or not  </param>
+    [Command]
+    void CmdBeAttackedOrNot(bool b)
+    {
+        canbeattack = b;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        string s = col.gameObject.name; // name of the collider 
+
+        if (s.StartsWith("attack"))
+        {
+            CmdBeAttackedOrNot(true);
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        CmdBeAttackedOrNot(false);
+        
     }
 
 

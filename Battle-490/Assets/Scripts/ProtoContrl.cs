@@ -119,8 +119,20 @@ public class ProtoContrl : NetworkBehaviour {
         
 
         // if player press the endturn button then end player turn
-        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn(); 
-        
+        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn();
+
+        if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
+        {
+            if(sltobj.canmove)
+                CmdSpawnMat(movarea); // spawn moveable area
+        }
+
+        if (CrossPlatformInputManager.GetButton("attack")) //if we click on ui button attack (?)
+        {
+            if(sltobj.canattack)
+                CmdSpawnMat(atkarea); //spawn attacking area (?)
+        }
+
         // if player press fire1 / left mouse  then cast ray from screen
         if (CrossPlatformInputManager.GetButton("Fire1")) {
             RaycastHit hit; 
@@ -129,21 +141,13 @@ public class ProtoContrl : NetworkBehaviour {
             {
                 if (hit.transform.name.StartsWith("toon")) // if i click on toons
                 {
-                    if (moveablearea) CmdDestroyMat(); // destroy previous spawn move areas
+                    if (moveablearea || attackingarea) CmdDestroyMat(); // destroy previous spawn move areas
                     if (sltobj) CmdDeselected(false); // deselect all toons
                     sltobj = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
-                    if (sltobj.owner == pname && sltobj.canmove) { // if it is a toon that i can control
+                    if (sltobj.owner == pname && (sltobj.canmove || sltobj.canattack)) { // if it is a toon that i can control
                         if (sltobj) CmdSelected(hit.transform.gameObject, true); // then select that toon. 
-
-                        if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
-                        {
-                            CmdSpawnMat(movarea); // spawn moveable area
-                        }
-
-                        if (CrossPlatformInputManager.GetButton("attack")) //if we click on ui button attack (?)
-                        {
-                            CmdSpawnMat(atkarea); //spawn attacking area (?)
-                        }
+                        
+                    }else if(sltobj.owner != pname){
                         
                     }
                     
