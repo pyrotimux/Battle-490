@@ -55,7 +55,7 @@ public class ProtoContrl : NetworkBehaviour {
     /// <param name="slt"> selected game object  </param>
     /// <param name="b"> bool that select or not  </param>
     [Command]
-    void CmdSelected(GameObject slt ,bool b)
+    void CmdSelected(GameObject slt, bool b)
     {
         sltobj = slt.GetComponent<ProtoMove>();
         sltobj.selected = b;
