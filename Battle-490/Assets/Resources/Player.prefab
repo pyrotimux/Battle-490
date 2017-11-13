@@ -54,6 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movarea: {fileID: 1977442637632702, guid: 39ddaa22ad8b55c4b9cefb1bddf1d619, type: 2}
   moveablearea: {fileID: 0}
+  atkarea: {fileID: 1977442637632702, guid: adb1b0d8311a14540a28a9243cc07ec9, type: 2}
+  attackingarea: {fileID: 0}
   toons:
   - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
   - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}

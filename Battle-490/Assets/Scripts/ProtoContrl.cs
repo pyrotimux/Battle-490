@@ -11,6 +11,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class ProtoContrl : NetworkBehaviour {
     private Vector3 hitpos; // where raycast hit occur
     public GameObject movarea, moveablearea; // movablearea stuff
+    public GameObject atkarea, attackingarea; // attacking stuff
     public GameObject[] toons; // toons that i control
     public ProtoMove sltobj; // obj that is currently selected
     private GameObject canvas; // this show gui if it's my turn
@@ -54,7 +55,7 @@ public class ProtoContrl : NetworkBehaviour {
     /// <param name="slt"> selected game object  </param>
     /// <param name="b"> bool that select or not  </param>
     [Command]
-    void CmdSelected(GameObject slt ,bool b)
+    void CmdSelected(GameObject slt, bool b)
     {
         sltobj = slt.GetComponent<ProtoMove>();
         sltobj.selected = b;
@@ -69,10 +70,11 @@ public class ProtoContrl : NetworkBehaviour {
     }
 
     /// <summary>spawn moveable area</summary>
+    /// <param name="mat"> the material that wanted to be spawned (?) </param>
     [Command]
-    void CmdSpawnMat()
+    void CmdSpawnMat(GameObject mat)
     {
-        GameObject m  = (GameObject)Instantiate(movarea, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
+        GameObject m  = (GameObject)Instantiate(mat, new Vector3(sltobj.transform.position.x, -0.57f, sltobj.transform.position.z), Quaternion.identity);
         NetworkServer.Spawn(m);
         moveablearea = m;
     }
@@ -86,6 +88,11 @@ public class ProtoContrl : NetworkBehaviour {
         {
             NetworkServer.Destroy(g);
         }
+    }
+
+    [Command]
+    void CmdDestroyGameObject(GameObject go) {
+        NetworkServer.Destroy(go);
     }
 
     /// <summary>end player turn.</summary>
@@ -117,8 +124,20 @@ public class ProtoContrl : NetworkBehaviour {
         
 
         // if player press the endturn button then end player turn
-        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn(); 
-        
+        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn();
+
+        if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
+        {
+            if(sltobj.canmove)
+                CmdSpawnMat(movarea); // spawn moveable area
+        }
+
+        if (CrossPlatformInputManager.GetButton("attack")) //if we click on ui button attack (?)
+        {
+            if(sltobj.canattack)
+                CmdSpawnMat(atkarea); //spawn attacking area (?)
+        }
+
         // if player press fire1 / left mouse  then cast ray from screen
         if (CrossPlatformInputManager.GetButton("Fire1")) {
             RaycastHit hit; 
@@ -127,13 +146,17 @@ public class ProtoContrl : NetworkBehaviour {
             {
                 if (hit.transform.name.StartsWith("toon")) // if i click on toons
                 {
-                    if (moveablearea) CmdDestroyMat(); // destroy previous spawn move areas
+                    if (moveablearea || attackingarea) CmdDestroyMat(); // destroy previous spawn move areas
                     if (sltobj) CmdDeselected(false); // deselect all toons
-                    sltobj = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
-                    if (sltobj.owner == pname && sltobj.canmove) { // if it is a toon that i can control
-                        if (sltobj) CmdSelected(hit.transform.gameObject, true); // then select that toon. 
+                    ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
 
-                        CmdSpawnMat(); // spawn moveable area
+                    if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
+                        CmdSelected(hit.transform.gameObject, true); // then select that toon. 
+                        
+                    }else if(hitpm.owner != pname){
+                        Vector3 temp = hitpm.moveto;
+                        CmdDestroyGameObject(hitpm.gameObject);
+                        CmdMove(temp);
                     }
                     
                 }

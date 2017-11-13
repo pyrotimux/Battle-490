@@ -11,6 +11,7 @@ public class ProtoMove : NetworkBehaviour {
     public bool selected; // if toon is selected
     public int speed = 10; // speed my toon is moving
     private bool delayed = true, justset = false; // delay so toon doesnt bounce
+    GameObject attackarea = null; // for trigger check
 
 
     [SyncVar]
@@ -23,10 +24,15 @@ public class ProtoMove : NetworkBehaviour {
     public bool canattack = false; // i can attack
 
     [SyncVar]
+    public bool canbeattack = false; // someone can attack me
+
+    [SyncVar]
     public bool canmove = false; // i can move
 
     [SyncVar]
     public Color pcolor = Color.white; // my toon color 
+
+
 
     // Use this for initialization
     void Start () {
@@ -40,6 +46,25 @@ public class ProtoMove : NetworkBehaviour {
         delayed = false;
         moveto = transform.position;
 
+    }
+
+    /// <summary>deselect toons</summary>
+    /// <param name="b"> bool that select or not  </param>
+    [Command]
+    void CmdBeAttackedOrNot(bool b)
+    {
+        canbeattack = b;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        string s = col.gameObject.name; // name of the collider 
+
+        if (s.StartsWith("attack"))
+        {
+            CmdBeAttackedOrNot(true);
+            attackarea = col.gameObject;
+        }
     }
 
 
@@ -66,6 +91,10 @@ public class ProtoMove : NetworkBehaviour {
         }
         else if(justset){
             transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
+        }
+
+        if (!attackarea) { // on trigger exit
+            CmdBeAttackedOrNot(false);
         }
         
     }
