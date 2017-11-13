@@ -24,6 +24,9 @@ public class ProtoMove : NetworkBehaviour {
     public bool canattack = false; // i can attack
 
     [SyncVar]
+    public bool attacking = false; // i can attack
+
+    [SyncVar]
     public bool canbeattack = false; // someone can attack me
 
     [SyncVar]
@@ -47,14 +50,7 @@ public class ProtoMove : NetworkBehaviour {
         moveto = transform.position;
 
     }
-
-    /// <summary>deselect toons</summary>
-    /// <param name="b"> bool that select or not  </param>
-    [Command]
-    void CmdBeAttackedOrNot(bool b)
-    {
-        canbeattack = b;
-    }
+    
 
     void OnTriggerEnter(Collider col)
     {
@@ -62,7 +58,7 @@ public class ProtoMove : NetworkBehaviour {
 
         if (s.StartsWith("attack"))
         {
-            CmdBeAttackedOrNot(true);
+            canbeattack = true;
             attackarea = col.gameObject;
         }
     }
@@ -86,15 +82,17 @@ public class ProtoMove : NetworkBehaviour {
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
         if (Vector3.Distance(transform.position, moveto) > 2f) {
-            if (canmove) { transform.LookAt(moveto); canmove = false; justset = true; }
+            if (attacking && canattack) { transform.LookAt(moveto); canattack = false; justset = true; }
+            else if (canmove && !attacking) { transform.LookAt(moveto); canmove = false; justset = true; }
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
         else if(justset){
             transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
+            if (attacking) attacking = false;
         }
 
         if (!attackarea) { // on trigger exit
-            CmdBeAttackedOrNot(false);
+            canbeattack = false;
         }
         
     }
