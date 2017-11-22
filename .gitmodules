@@ -1,0 +1,3 @@
+[submodule "Battle-490-Web"]
+	path = Battle-490-Web
+	url = https://github.com/pyrotimux/Battle-490-Web.git
