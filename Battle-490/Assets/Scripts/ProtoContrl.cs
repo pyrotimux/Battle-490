@@ -87,7 +87,7 @@ public class ProtoContrl : NetworkBehaviour {
     [ClientRpc]
     void RpcPlayerDeselected()
     {
-        sltpm.selected = true;
+        sltpm.selected = false;
     }
 
 
