@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4701772970172810}
   - component: {fileID: 114587032443835736}
   - component: {fileID: 114673798784318110}
+  - component: {fileID: 114184303717412340}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -41,6 +42,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114184303717412340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1548842772704946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad06dda63fbc0c942adcceb64f86de68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114587032443835736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56,11 +68,13 @@ MonoBehaviour:
     type: 2}
   attackingarea: {fileID: 1977442637632702, guid: adb1b0d8311a14540a28a9243cc07ec9,
     type: 2}
+  areaset: 0
   toons:
   - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
   - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}
   - {fileID: 1511126989594428, guid: e0e1dddba87483543903e0312c50a2f6, type: 2}
   sltobj: {fileID: 0}
+  sltpm: {fileID: 0}
   pname: Player 1
   pcolor: {r: 1, g: 1, b: 1, a: 1}
   myturn: 0

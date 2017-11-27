@@ -4,7 +4,7 @@ using UnityEngine;
 
 class toonDetail
 {
-    public string toonType; //data, virus or antivirus?
+    //public string toonType; //data, virus or antivirus?
     public int health; //toon HP count
     public int atkpower; //toon attack power
     public int defpower; //toon defense power
@@ -25,9 +25,20 @@ public class ProtoStats : MonoBehaviour {
         toon.defpower = 1;
 
 	}
+
+    void OnCollisionEnter(Collision hit)
+    {
+        if (hit.gameObject.tag == "toons")
+        {
+            toon.health -= toon.atkpower;
+            print ("I GOT HIT! HEALTH NOW " + toon.health);
+        }
+    }
 	
+    /*
 	// Update is called once per frame
 	void Update () {
 		
 	}
+    */
 }
