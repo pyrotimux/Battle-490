@@ -16,8 +16,10 @@ public class ProtoContrl : NetworkBehaviour {
     public GameObject[] toons; // toons that i control
     public GameObject sltobj;
     public ProtoMove sltpm; // obj that is currently selected
+    public ProtoStats sltps; // stats for selected obj (maybe?)
     private GameObject canvas; // this show gui if it's my turn
     private bool setal = false;  // limit painting gui over and over again.
+    //private ProtoStats toonStatus; //maybe not?
 
 
     [SyncVar]
@@ -40,6 +42,7 @@ public class ProtoContrl : NetworkBehaviour {
             NetworkServer.Spawn(curtoon);
             ProtoMove m = curtoon.GetComponent<ProtoMove>();
             m.owner = pname; m.pcolor = pcolor;
+            //ProtoStats stats = curtoon.GetComponent<ProtoStats>(); //maybe not?
         }
     }
 
@@ -66,6 +69,7 @@ public class ProtoContrl : NetworkBehaviour {
     void CmdPlayerSelected(GameObject go)
     {
         sltpm = go.GetComponent<ProtoMove>();
+        sltps = go.GetComponent<ProtoStats>(); //maybe?
         sltpm.selected = true;
         RpcPlayerSelected(go);
     }
@@ -182,16 +186,22 @@ public class ProtoContrl : NetworkBehaviour {
                     if (areaset) CmdDestroyMat(); // destroy previous spawn move areas
                     if (sltpm) CmdPlayerDeselected(); // deselect all toons
                     ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
+                    
 
                     if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
                         sltpm = hitpm;
                         CmdPlayerSelected(hit.transform.gameObject); // then select that toon. 
                         
                     }else if((hitpm.owner != pname) && hitpm.canbeattack){
-                        Vector3 temp = hitpm.moveto;
-                        CmdDestroyGameObject(hitpm.gameObject);
-                        CmdMove(temp);
-                        CmdDestroyMat(); // destroy areas.
+                        ProtoStats hitps = hit.transform.GetComponent<ProtoStats>(); //stats for ^^ (?)
+                        if (hitps.toon.health == 0) //destroy toon only when their health == 0 (?)
+                        {
+                            Vector3 temp = hitpm.moveto;
+                            CmdDestroyGameObject(hitpm.gameObject);
+                            CmdMove(temp);
+                            CmdDestroyMat(); // destroy areas.
+                        }
+                        
                     }
                     
                 }

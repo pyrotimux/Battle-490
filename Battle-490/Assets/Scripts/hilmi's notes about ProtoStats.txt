@@ -1,0 +1,15 @@
+should we try to lump everythin in just one script? or is it better to separate stuff?
+
+
+this guy here suggesting a solution using dictionary.. ok, no ok?
+https://www.reddit.com/r/Unity3D/comments/37m8ne/this_guy_created_tutorials_for_rpg_items_and/
+
+
+some other suggested solution here
+https://forum.unity.com/threads/creating-a-character-class.30093/
+
+
+to what should we need to link the script to? Player? toon? etc etc???
+
+
+bloody hell I still can't grasp the logic behind this multiplayer I'm dumb T.T

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-class toonDetail
+public class toonDetail
 {
     //public string toonType; //data, virus or antivirus?
     public int health; //toon HP count
@@ -10,28 +11,30 @@ class toonDetail
     public int defpower; //toon defense power
 }
 
-public class ProtoStats : MonoBehaviour {
+public class ProtoStats : NetworkBehaviour {
 
-    toonDetail toon;
+    public toonDetail toon;
 
 	// Use this for initialization
 	void Start () {
 
         //initializing each toons stats below
-        toon = new toonDetail();
-        //toon.toonType = "";
-        toon.health = 3;
-        toon.atkpower = 2;
-        toon.defpower = 1;
+        toon = new toonDetail
+        {
+            //toon.toonType = "",
+            health = 3,
+            atkpower = 2,
+            defpower = 1
+        };
 
-	}
+    }
 
     void OnCollisionEnter(Collision hit)
     {
         if (hit.gameObject.tag == "toons")
         {
             toon.health -= toon.atkpower;
-            print ("I GOT HIT! HEALTH NOW " + toon.health);
+            Debug.Log("I GOT HIT! HEALTH IS NOW " + toon.health);
         }
     }
 	
