@@ -35,6 +35,27 @@ public class ProtoMove : NetworkBehaviour {
     [SyncVar]
     public Color pcolor = Color.white; // my toon color 
 
+    //solution no2 - initializing and controlling toon health from here instead
+    [SyncVar]
+    public int health = 5;
+
+    //solution no2
+    [ClientRpc]
+    void RpcDamage(int newhealth)
+    {
+        Debug.Log("Toon got attacked! Health now: " + newhealth);
+    }
+
+    //solution no2
+    public void TakeDamage(int gotHitDamage)
+    {
+        if (!isServer)
+            return;
+
+        health -= gotHitDamage;
+        RpcDamage(health);
+    }
+
 
 
     // Use this for initialization

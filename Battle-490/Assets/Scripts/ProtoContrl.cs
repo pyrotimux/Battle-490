@@ -16,7 +16,7 @@ public class ProtoContrl : NetworkBehaviour {
     public GameObject[] toons; // toons that i control
     public GameObject sltobj;
     public ProtoMove sltpm; // obj that is currently selected
-    public ProtoStats sltps; // stats for selected obj (maybe?)
+    //public ProtoStats sltps; // stats for selected obj (maybe?)
     private GameObject canvas; // this show gui if it's my turn
     private bool setal = false;  // limit painting gui over and over again.
     //private ProtoStats toonStatus; //maybe not?
@@ -69,7 +69,7 @@ public class ProtoContrl : NetworkBehaviour {
     void CmdPlayerSelected(GameObject go)
     {
         sltpm = go.GetComponent<ProtoMove>();
-        sltps = go.GetComponent<ProtoStats>(); //maybe?
+        //sltps = go.GetComponent<ProtoStats>(); //maybe?
         sltpm.selected = true;
         RpcPlayerSelected(go);
     }
@@ -94,6 +94,7 @@ public class ProtoContrl : NetworkBehaviour {
         sltpm.selected = false;
     }
 
+    
 
     /// <summary>spawn moveable area</summary>
     /// <param name="mat"> the material that wanted to be spawned (?) </param>
@@ -160,7 +161,11 @@ public class ProtoContrl : NetworkBehaviour {
         
 
         // if player press the endturn button then end player turn
-        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn();
+        if (CrossPlatformInputManager.GetButtonDown("endturn"))
+        {
+            //CmdDestroyMat(); //trying to destroy moveableare before turn got end, maybe not working
+            CmdEndTurn();
+        }
 
         if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
         {
@@ -193,9 +198,21 @@ public class ProtoContrl : NetworkBehaviour {
                         CmdPlayerSelected(hit.transform.gameObject); // then select that toon. 
                         
                     }else if((hitpm.owner != pname) && hitpm.canbeattack){
-                        ProtoStats hitps = hit.transform.GetComponent<ProtoStats>(); //stats for ^^ (?)
-                        if (hitps.toon.health == 0) //destroy toon only when their health == 0 (?)
+                        //ProtoStats hitps = hit.transform.GetComponent<ProtoStats>(); //stats for ^^ (?)
+
+                        //solution no2
+                        //give the enemy 3 damage
+                        //i think the variable for toon's attackpower should be in this ProtoContrl code
+                        hitpm.TakeDamage(3); 
+
+                        /* 
+                         * tested solution no2 twice, worked once outta two. logic flaw somewhere?
+                         * first time without line 166, health <= 0 works
+                         * 2nd time with line 166, health goes to negative value, toon not destroyed
+                        */
+                        if (hitpm.health <= 0) //destroy toon only when their health <= 0 (?)
                         {
+                            Debug.Log("Attacked toon destroyed!");
                             Vector3 temp = hitpm.moveto;
                             CmdDestroyGameObject(hitpm.gameObject);
                             CmdMove(temp);
