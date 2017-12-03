@@ -12,6 +12,8 @@ public class ProtoMove : NetworkBehaviour {
     public int speed = 10; // speed my toon is moving
     private bool delayed = true, justset = false; // delay so toon doesnt bounce
     GameObject attackarea = null; // for trigger check
+    Renderer rend;
+    Animator toonAnim;
 
 
     [SyncVar]
@@ -22,6 +24,9 @@ public class ProtoMove : NetworkBehaviour {
 
     [SyncVar]
     public bool canattack = false; // i can attack
+
+    [SyncVar]
+    public bool attacking = false; // i can attack
 
     [SyncVar]
     public bool canbeattack = false; // someone can attack me
@@ -45,16 +50,12 @@ public class ProtoMove : NetworkBehaviour {
         yield return new WaitForSeconds(time);
         delayed = false;
         moveto = transform.position;
-
+        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = owner;
+        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().color = pcolor;
+        rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        toonAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();
     }
-
-    /// <summary>deselect toons</summary>
-    /// <param name="b"> bool that select or not  </param>
-    [Command]
-    void CmdBeAttackedOrNot(bool b)
-    {
-        canbeattack = b;
-    }
+    
 
     void OnTriggerEnter(Collider col)
     {
@@ -62,39 +63,38 @@ public class ProtoMove : NetworkBehaviour {
 
         if (s.StartsWith("attack"))
         {
-            CmdBeAttackedOrNot(true);
+            canbeattack = true;
             attackarea = col.gameObject;
         }
     }
 
-
     // Update is called once per frame
     void LateUpdate () {
         if (delayed) return; // only start after init.
-        if (selected) // if i am selected then i am red or else i am set player color.
+        if (!selected) // if i am selected then i am red or else i am set player color.
         {
-            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in rends)
-                r.material.color = Color.red;
+            rend.material.color = Color.white;
         }
         else {
-            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in rends)
-                r.material.color = pcolor;
+            rend.material.color = pcolor;
         }
 
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
         if (Vector3.Distance(transform.position, moveto) > 2f) {
-            if (canmove) { transform.LookAt(moveto); canmove = false; justset = true; }
+            if (attacking && canattack) { transform.LookAt(moveto); canattack = false; justset = true; toonAnim.SetBool("runBool", true); }
+            else if (canmove && !attacking) { transform.LookAt(moveto); canmove = false; justset = true; toonAnim.SetBool("runBool", true); }
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            
         }
         else if(justset){
             transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
+            if (attacking) attacking = false;
+            toonAnim.SetBool("runBool", false);
         }
 
         if (!attackarea) { // on trigger exit
-            CmdBeAttackedOrNot(false);
+            canbeattack = false;
         }
         
     }
