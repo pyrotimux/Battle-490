@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityStandardAssets.CrossPlatformInput;
 
 /// <summary>
 /// this class handles control protocol of players
@@ -18,13 +17,14 @@ public class ProtoContrl : NetworkBehaviour {
     public ProtoMove sltpm; // obj that is currently selected
     private GameObject canvas; // this show gui if it's my turn
     private bool setal = false;  // limit painting gui over and over again.
+    public ProtoHandlers pbut;
 
 
     [SyncVar]
     public string pname = "Player 1"; // network player name 
 
     [SyncVar]
-    public Color pcolor = Color.white; // network player color 
+    public Color pcolor = Color.red; // network player color 
 
     [SyncVar]
     public bool myturn = false; // define if player turn or not
@@ -143,6 +143,7 @@ public class ProtoContrl : NetworkBehaviour {
             Camera.main.transform.rotation = this.transform.rotation;
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
+            pbut = GameObject.Find("pButtonHandler").GetComponent<ProtoHandlers>();
         }
 
         
@@ -163,29 +164,37 @@ public class ProtoContrl : NetworkBehaviour {
 
 
         // if player press the endturn button then end player turn
-        if (CrossPlatformInputManager.GetButtonDown("endturn")) {
+        if (Input.GetButtonDown("endturn") || pbut.enddown) {
             CmdPlayerDeselected();
             CmdDestroyMat();
             CmdEndTurn();
-
+            pbut.enddown = false;
         }
 
-        if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
+        if (Input.GetButton("move") || pbut.movedown) //if we click on ui button move (?)
         {
-            Debug.Log("Hello ");
             if (sltpm.canmove)
+            {
                 CmdSpawnMoveArea(); // spawn moveable area
+                pbut.movedown = false;
+            }
+                
         }
 
-        if (CrossPlatformInputManager.GetButton("attack")) //if we click on ui button attack (?)
+        if (Input.GetButton("attack") || pbut.attackdown) //if we click on ui button attack (?)
         {
             if (sltpm.canattack)
+            {
                 CmdSpawnAttackArea(); //spawn attacking area (?)
+                pbut.attackdown = false;
+            }
+                
         }
 
 
         // if player press fire1 / left mouse  then cast ray from screen
-        if (CrossPlatformInputManager.GetButton("Fire1")) {
+        if (Input.GetButton("Fire1")) {
+            Debug.Log("Hello ");
             RaycastHit hit; 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit)) // if ray cast hit a collider then 
