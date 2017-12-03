@@ -13,6 +13,7 @@ public class ProtoMove : NetworkBehaviour {
     private bool delayed = true, justset = false; // delay so toon doesnt bounce
     GameObject attackarea = null; // for trigger check
     Renderer rend;
+    Animator toonAnim;
 
 
     [SyncVar]
@@ -52,6 +53,7 @@ public class ProtoMove : NetworkBehaviour {
         gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = owner;
         gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().color = pcolor;
         rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        toonAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();
     }
     
 
@@ -80,13 +82,15 @@ public class ProtoMove : NetworkBehaviour {
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
         if (Vector3.Distance(transform.position, moveto) > 2f) {
-            if (attacking && canattack) { transform.LookAt(moveto); canattack = false; justset = true; }
-            else if (canmove && !attacking) { transform.LookAt(moveto); canmove = false; justset = true; }
+            if (attacking && canattack) { transform.LookAt(moveto); canattack = false; justset = true; toonAnim.SetBool("runBool", true); }
+            else if (canmove && !attacking) { transform.LookAt(moveto); canmove = false; justset = true; toonAnim.SetBool("runBool", true); }
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            
         }
         else if(justset){
             transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
             if (attacking) attacking = false;
+            toonAnim.SetBool("runBool", false);
         }
 
         if (!attackarea) { // on trigger exit
