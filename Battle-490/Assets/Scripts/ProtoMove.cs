@@ -12,6 +12,7 @@ public class ProtoMove : NetworkBehaviour {
     public int speed = 10; // speed my toon is moving
     private bool delayed = true, justset = false; // delay so toon doesnt bounce
     GameObject attackarea = null; // for trigger check
+    Renderer rend;
 
 
     [SyncVar]
@@ -48,7 +49,9 @@ public class ProtoMove : NetworkBehaviour {
         yield return new WaitForSeconds(time);
         delayed = false;
         moveto = transform.position;
-
+        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = owner;
+        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().color = pcolor;
+        rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
     }
     
 
@@ -63,20 +66,15 @@ public class ProtoMove : NetworkBehaviour {
         }
     }
 
-
     // Update is called once per frame
     void LateUpdate () {
         if (delayed) return; // only start after init.
-        if (selected) // if i am selected then i am red or else i am set player color.
+        if (!selected) // if i am selected then i am red or else i am set player color.
         {
-            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in rends)
-                r.material.color = Color.red;
+            rend.material.color = Color.white;
         }
         else {
-            Renderer[] rends = gameObject.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in rends)
-                r.material.color = pcolor;
+            rend.material.color = pcolor;
         }
 
         // if i am far from where i am moving to then look at it and keep moving. 

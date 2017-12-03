@@ -87,7 +87,7 @@ public class ProtoContrl : NetworkBehaviour {
     [ClientRpc]
     void RpcPlayerDeselected()
     {
-        sltpm.selected = true;
+        sltpm.selected = false;
     }
 
 
@@ -147,16 +147,28 @@ public class ProtoContrl : NetworkBehaviour {
 
         
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public IEnumerator DelayDestroy(float time, GameObject go)
+    {
+        yield return new WaitForSeconds(time);
+        CmdDestroyGameObject(go);
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
         // if it's not my turn the dont show gui component.
         if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) { canvas.SetActive(true); setal = true; }
-        
+
 
         // if player press the endturn button then end player turn
-        if (CrossPlatformInputManager.GetButtonDown("endturn")) CmdEndTurn();
+        if (CrossPlatformInputManager.GetButtonDown("endturn")) {
+            CmdPlayerDeselected();
+            CmdDestroyMat();
+            CmdEndTurn();
+
+        }
 
         if (CrossPlatformInputManager.GetButton("move")) //if we click on ui button move (?)
         {
@@ -171,6 +183,7 @@ public class ProtoContrl : NetworkBehaviour {
                 CmdSpawnAttackArea(); //spawn attacking area (?)
         }
 
+
         // if player press fire1 / left mouse  then cast ray from screen
         if (CrossPlatformInputManager.GetButton("Fire1")) {
             RaycastHit hit; 
@@ -184,26 +197,29 @@ public class ProtoContrl : NetworkBehaviour {
                     ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
 
                     if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
-                        sltpm = hitpm;
                         CmdPlayerSelected(hit.transform.gameObject); // then select that toon. 
                         
                     }else if((hitpm.owner != pname) && hitpm.canbeattack){
                         Vector3 temp = hitpm.moveto;
+
+                        CmdAttack(temp);
+
                         CmdDestroyGameObject(hitpm.gameObject);
-                        CmdMove(temp);
-                        CmdDestroyMat(); // destroy areas.
                     }
                     
                 }
                 else if(hit.transform.name.StartsWith("moveablearea") && sltpm.canmove) // if i am clicking on moveable area and my toon can move
                 {
                     CmdMove(hit.point); // move the toon
-                    CmdDestroyMat(); // destroy areas.
+                    
 
                 }
+                CmdDestroyMat(); // destroy areas.
 
             }
 
         }
+
+        
     }
 }
