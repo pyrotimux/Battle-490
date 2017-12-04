@@ -35,7 +35,7 @@ public class ProtoMove : NetworkBehaviour {
     public bool canmove = false; // i can move
 
     [SyncVar]
-    public Color pcolor = Color.white; // my toon color 
+    public Color pcolor = Color.red; // my toon color 
 
 
 

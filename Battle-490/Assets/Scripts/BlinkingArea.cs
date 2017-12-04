@@ -8,6 +8,8 @@ using UnityEngine;
 /// 
 public class BlinkingArea : MonoBehaviour {
     private int i = 0;
+    public Color matColor = Color.yellow;
+
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +18,7 @@ public class BlinkingArea : MonoBehaviour {
 
     void Twinkle() {
         if (i == 0) {
-            gameObject.GetComponent<Renderer>().material.color = Color.yellow; // if i is 0 then i am blue
+            gameObject.GetComponent<Renderer>().material.color = matColor; // if i is 0 then i am blue
             i++;
         }else {
             gameObject.GetComponent<Renderer>().material.color = Color.white; // else i am whit and turn i back to 0.

@@ -68,21 +68,5 @@ public class MenuFunction : MonoBehaviour
         goback.SetActive(false);
         gobut.SetActive(true);
     }
-
-    /// <summary>
-    /// presses the endturn button down 
-    /// </summary>
-    public void Button_End_Turn_Down()
-    {
-        CrossPlatformInputManager.SetButtonDown("endturn");
-    }
-
-
-    /// <summary>
-    /// presses the endturn button up 
-    /// </summary>
-    public void Button_End_Turn_Up()
-    {
-        CrossPlatformInputManager.SetButtonUp("endturn");
-    }
+    
 }
