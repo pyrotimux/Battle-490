@@ -160,7 +160,7 @@ public class ProtoContrl : NetworkBehaviour {
     void Update () {
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
         // if it's not my turn the dont show gui component.
-        if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) { canvas.SetActive(true); setal = true; }
+        if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) {canvas.SetActive(true); setal = true; }
 
 
         // if player press the endturn button then end player turn
