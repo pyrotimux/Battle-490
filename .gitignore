@@ -9,7 +9,6 @@ Battle-490/[Ll]ibrary/
 sysinfo.txt
 *.stackdump
 Battle-490/Assets/AssetStoreTools*
-*.apk
 *.unitypackage
  
 # ===================================== #
