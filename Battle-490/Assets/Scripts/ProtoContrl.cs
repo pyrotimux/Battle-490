@@ -141,6 +141,9 @@ public class ProtoContrl : NetworkBehaviour {
             // if i am local then i want a camera 
             Camera.main.transform.position = this.transform.position;
             Camera.main.transform.rotation = this.transform.rotation;
+
+            StartCoroutine(DelayCamAttach(2));
+
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
             pbut = GameObject.Find("pButtonHandler").GetComponent<ProtoHandlers>();
@@ -156,9 +159,31 @@ public class ProtoContrl : NetworkBehaviour {
 
     }
 
+    public IEnumerator DelayCamAttach(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        transform.rotation = Quaternion.EulerRotation(0, Camera.main.transform.rotation.y, 0);
+        Camera.main.transform.parent = this.transform;
+
+    }
+
     // Update is called once per frame
     void Update () {
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
+
+        if (Input.GetButton("up")) //if we click on ui button move (?)
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * 10);
+        } else if (Input.GetButton("left"))
+        {
+            transform.rotation *= Quaternion.EulerRotation(0, -0.1f, 0);
+        }
+        else if (Input.GetButton("right"))
+        {
+            transform.rotation *= Quaternion.EulerRotation(0, 0.1f, 0);
+        }
+
         // if it's not my turn the dont show gui component.
         if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) {canvas.SetActive(true); setal = true; }
 
