@@ -475,7 +475,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="P:UnityEngine.Tilemaps.TileData.transform">
       <summary>
-        <para>.</para>
+        <para>Matrix4x4|Transform matrix of the Tile.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Tilemaps.TileFlags">
@@ -681,7 +681,7 @@ Only one class at any one time should set defaultBrush to true.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
-        <para> placed at the cell.</para>
+        <para>Tilemaps.TileBase|Tile of type T placed at the cell.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileFlags(UnityEngine.Vector3Int)">

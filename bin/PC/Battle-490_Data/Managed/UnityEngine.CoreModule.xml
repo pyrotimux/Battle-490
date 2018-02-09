@@ -18566,6 +18566,11 @@ The Player ID is always 1, because only one Editor can be connected.</param>
         <para>The playable injected into the graph, or the root playable if multiple playables are injected.</para>
       </returns>
     </member>
+    <member name="?:UnityEngine.Playables.IPlayableBehaviour">
+      <summary>
+        <para>Interface implemented by all C# Playable Behaviour implementations.</para>
+      </summary>
+    </member>
     <member name="?:UnityEngine.Playables.IPlayableOutput">
       <summary>
         <para>Interface implemented by all C# Playable output implementations.</para>
@@ -18676,7 +18681,7 @@ The Player ID is always 1, because only one Editor can be connected.</param>
       </summary>
       <param name="playable">The Playable that owns the current PlayableBehaviour.</param>
       <param name="info">A FrameData structure that contains information about the current frame context.</param>
-      <param name="playerData">A player defined object that was set with PlayableOutputExtensions.SetUserData.</param>
+      <param name="playerData"></param>
     </member>
     <member name="T:UnityEngine.Playables.PlayableBinding">
       <summary>
@@ -19159,6 +19164,16 @@ The Player ID is always 1, because only one Editor can be connected.</param>
         <para>Stops the graph, if it is playing.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.Playables.PlayableOutput">
+      <summary>
+        <para>See: Playables.IPlayableOutput.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Playables.PlayableOutput.Null">
+      <summary>
+        <para>Returns an invalid PlayableOutput.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Playables.PlayableOutputExtensions">
       <summary>
         <para>Extensions for all the types that implements IPlayableOutput.</para>
@@ -19171,7 +19186,7 @@ The Player ID is always 1, because only one Editor can be connected.</param>
     </member>
     <member name="F:UnityEngine.Playables.PlayState.Delayed">
       <summary>
-        <para>The Playable has been delayed, using SetDelay. It will not start until the delay is entirely consumed.</para>
+        <para>The Playable has been delayed, using PlayableExtensions.SetDelay. It will not start until the delay is entirely consumed.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Playables.PlayState.Paused">
@@ -25382,7 +25397,7 @@ See RenderTexture.useMipMap.</para>
     </member>
     <member name="P:UnityEngine.RenderTextureDescriptor.vrUsage">
       <summary>
-        <para>If this RenderTexture is a VR eye texture used in stereoscopic rendering, this property decides what special rendering occurs, if any. Instead of setting this manually, use the value returned by GetDefaultVREyeTextureDesc or other VR functions returning a RenderTextureDescriptor.</para>
+        <para>If this RenderTexture is a VR eye texture used in stereoscopic rendering, this property decides what special rendering occurs, if any. Instead of setting this manually, use the value returned by XR.XRSettings.eyeTextureDesc|eyeTextureDesc or other VR functions returning a RenderTextureDescriptor.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.RenderTextureDescriptor.width">
@@ -26138,7 +26153,7 @@ A scene may be invalid if, for example, you tried to open a scene that does not 
     </member>
     <member name="M:UnityEngine.SceneManagement.SceneManager.GetSceneByName(System.String)">
       <summary>
-        <para>Searches through the Scenes added to the SceneManager for a Scene with the given name.</para>
+        <para>Searches through the Scenes loaded for a Scene with the given name.</para>
       </summary>
       <param name="name">Name of Scene to find.</param>
       <returns>
@@ -26147,7 +26162,7 @@ A scene may be invalid if, for example, you tried to open a scene that does not 
     </member>
     <member name="M:UnityEngine.SceneManagement.SceneManager.GetSceneByPath(System.String)">
       <summary>
-        <para>Searches all Scenes added to the SceneManager for a Scene that has the given asset path.</para>
+        <para>Searches all Scenes loaded for a Scene that has the given asset path.</para>
       </summary>
       <param name="scenePath">Path of the Scene. Should be relative to the project folder. Like: "AssetsMyScenesMyScene.unity".</param>
       <returns>
@@ -28429,6 +28444,11 @@ Note that GPUFences are only supported on PS4.</para>
     <member name="P:UnityEngine.TextAsset.text">
       <summary>
         <para>The text contents of the .txt file as a string. (Read Only)</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextAsset.ToString">
+      <summary>
+        <para>Returns the contents of the TextAsset.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Texture">
@@ -31648,7 +31668,7 @@ Useful for restarting a trail from a new position.</para>
     </member>
     <member name="T:UnityEngine.VRTextureUsage">
       <summary>
-        <para>This enum describes how the RenderTexture is used as a VR eye texture. Instead of using the values of this enum manually, use the value returned by GetDefaultVREyeTextureDesc or other VR functions returning a RenderTextureDesc.</para>
+        <para>This enum describes how the RenderTexture is used as a VR eye texture. Instead of using the values of this enum manually, use the value returned by XR.XRSettings.eyeTextureDesc|eyeTextureDesc or other VR functions returning a RenderTextureDescriptor.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.VRTextureUsage.None">

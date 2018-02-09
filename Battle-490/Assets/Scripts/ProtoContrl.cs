@@ -175,7 +175,12 @@ public class ProtoContrl : NetworkBehaviour {
         if (Input.GetButton("up")) //if we click on ui button move (?)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * 10);
-        } else if (Input.GetButton("left"))
+        }
+        else if (Input.GetButton("down")) // adding 1 more button (down = s) for camera to move backwards
+        {
+            transform.Translate(Vector3.back * Time.deltaTime * 10);
+        }
+        else if (Input.GetButton("left"))
         {
             transform.rotation *= Quaternion.EulerRotation(0, -0.1f, 0);
         }
