@@ -198,7 +198,7 @@ public class ProtoContrl : NetworkBehaviour {
             CmdPlayerDeselected();
             CmdDestroyMat();
             CmdEndTurn();
-            pbut.enddown = false;
+            pbut.enddown = false; //unpress button
         }
 
         if (Input.GetButton("move") || pbut.movedown) //if we click on ui button move (?)
