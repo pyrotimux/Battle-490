@@ -322,6 +322,7 @@
     <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
     <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
     <Compile Include="Assets\Scripts\BlinkingArea.cs" />
+    <Compile Include="Assets\Scripts\Collectables.cs" />
     <Compile Include="Assets\Scripts\GameMgr.cs" />
     <Compile Include="Assets\Scripts\LobHooks.cs" />
     <Compile Include="Assets\Scripts\MenuFunction.cs" />
