@@ -192,7 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc807a75f5f23474c8e60ebf919f58f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectablesEffect: {fileID: 0}
+  collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
+    type: 2}
   increaseScore: 50
 --- !u!114 &23216440
 MonoBehaviour:
@@ -1906,7 +1907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc807a75f5f23474c8e60ebf919f58f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectablesEffect: {fileID: 0}
+  collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
+    type: 2}
   increaseScore: 50
 --- !u!65 &993068764
 BoxCollider:

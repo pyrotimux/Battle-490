@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
+        // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
     public int increaseScore = 50; // score that each collectables carry
     ProtoContrl[] plyrs;
 
@@ -48,8 +49,7 @@ public class Collectables : NetworkBehaviour {
     void AddScore(Collider toon)
     {
         // step 1 : spawn effect when collide
-        // (install and use Unity Particle Pack and refer it to collectablesEffect)
-        //Instantiate(collectablesEffect, transform.position, transform.rotation);
+        Instantiate(collectablesEffect, transform.position, transform.rotation);
 
         // step 2 : add score
         Debug.Log("Crashing into collectables..");
