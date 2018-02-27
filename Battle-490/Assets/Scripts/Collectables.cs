@@ -8,6 +8,31 @@ public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect;
     public int increaseScore = 50;
+    ProtoContrl[] plyrs;
+
+    void Start()
+    {
+        StartCoroutine(DelayStart(3)); // delay init.
+    }
+
+    public IEnumerator DelayStart(float time)
+    {
+        yield return new WaitForSeconds(time);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); // get all players from game
+        int j = 0; // counter so we can assign them 
+        plyrs = new ProtoContrl[players.Length]; // init array with lenght of total player
+        foreach (GameObject p in players)
+        {
+            plyrs[j++] = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
+        }
+
+    }
+
+    [Command]
+    void CmdDestroyGameObject(GameObject go)
+    {
+        NetworkServer.Destroy(go);
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -17,21 +42,33 @@ public class Collectables : NetworkBehaviour {
         }
     }
 
-    void AddScore(Collider player)
+    void AddScore(Collider toon)
     {
         // spawn effect when collide
-        // (install and use Unity Particle Pack)
+        // (install and use Unity Particle Pack and refer it to collectablesEffect)
         //Instantiate(collectablesEffect, transform.position, transform.rotation);
 
         // add score
-        // error: line 32
-        // fix: how to get from toons to ProtoContrl to change the score??? 
-        ProtoContrl score = player.GetComponent<ProtoContrl>();
+        Debug.Log("Crashing into collectables..");
+        String name = toon.GetComponent<ProtoMove>().owner;
+        int j = 0;
+        ProtoContrl ply = null;
+
+        foreach (ProtoContrl p in plyrs)
+        {
+            Debug.Log(plyrs[j].pname + " " + name);
+            if (plyrs[j].pname == name) {
+                ply = plyrs[j];
+            }
+            j++;
+                
+        }
+
         //Debug.Log("Player score : " + score.playerScore);
-        score.playerScore += increaseScore;
-        Debug.Log("Player new score : " + score.playerScore);
+        ply.playerScore += increaseScore;
+        Debug.Log("Player new score : " + ply.playerScore);
 
         // remove collectables
-        Destroy(gameObject);
+        CmdDestroyGameObject(gameObject);
     }
 }
