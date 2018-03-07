@@ -8,6 +8,7 @@ TagManager:
   - moveablegrounds
   - attackingarea
   - GameMgr
+  - score
   layers:
   - Default
   - TransparentFX

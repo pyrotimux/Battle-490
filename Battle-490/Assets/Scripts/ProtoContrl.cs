@@ -183,11 +183,13 @@ public class ProtoContrl : NetworkBehaviour {
         }
         else if (Input.GetButton("left"))
         {
-            transform.rotation *= Quaternion.EulerRotation(0, -0.1f, 0);
+            //transform.rotation *= Quaternion.EulerRotation(0, -0.1f, 0);
+            transform.rotation *= Quaternion.Euler(0, -5f, 0);
         }
         else if (Input.GetButton("right"))
         {
-            transform.rotation *= Quaternion.EulerRotation(0, 0.1f, 0);
+            //transform.rotation *= Quaternion.EulerRotation(0, 0.1f, 0);
+            transform.rotation *= Quaternion.Euler(0, 5f, 0);
         }
 
         // if it's not my turn the dont show gui component.

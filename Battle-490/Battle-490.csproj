@@ -337,6 +337,7 @@
     <Compile Include="Assets\Scripts\ProtoHandlers.cs" />
     <Compile Include="Assets\Scripts\ProtoMove.cs" />
     <Compile Include="Assets\Scripts\SpinEntity.cs" />
+    <Compile Include="Assets\SpawnMgr.cs" />
     <Compile Include="Assets\Tests\TestSetups.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark01_UGUI.cs" />

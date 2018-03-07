@@ -8,7 +8,7 @@ public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
         // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
-    public int increaseScore = 50; // score that each collectables carry
+    public int increaseScore = 100; // score that each collectables carry
     ProtoContrl[] plyrs;
 
     void Start()
