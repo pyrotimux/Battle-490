@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class SpawnMgr : NetworkBehaviour {
     public Transform[] spwnpos;
     public GameObject collectprefab;
-    private int counter =0;
+    private int counter = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class SpawnMgr : NetworkBehaviour {
 
     private void LateUpdate()
     {
-        if (counter == 600)
+        if (counter == 1000)
         {
             CmdCollectSpawn();
             counter = 0;

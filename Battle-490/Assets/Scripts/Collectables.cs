@@ -8,13 +8,40 @@ public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
         // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
-    public int increaseScore = 100; // score that each collectables carry
+    private int changeScore; // score that each collectables carry (10, 20, 30, 40 or 50)
+    private int randomizeScore;
+    private int bombChance; // random chances (collectables is a bomb or not)
     ProtoContrl[] plyrs;
 
     void Start()
     {
         // delay to 3 to wait for GameMgr (deyaled 2) to prepare all the player first
         StartCoroutine(DelayStart(3)); // delay init.
+
+        // get random number from 0 to 9
+        bombChance = UnityEngine.Random.Range(0, 10);
+        randomizeScore = UnityEngine.Random.Range(0, 10);
+
+        if (randomizeScore == 0 || randomizeScore == 1)
+        {
+            changeScore = 10;
+        }
+        else if (randomizeScore == 2 || randomizeScore == 3)
+        {
+            changeScore = 20;
+        }
+        else if (randomizeScore == 4 || randomizeScore == 5)
+        {
+            changeScore = 30;
+        }
+        else if (randomizeScore == 6 || randomizeScore == 7)
+        {
+            changeScore = 40;
+        }
+        else
+        {
+            changeScore = 50;
+        }
     }
 
     public IEnumerator DelayStart(float time)
@@ -42,8 +69,42 @@ public class Collectables : NetworkBehaviour {
     {
         if (other.CompareTag("toons"))
         {
-            AddScore(other);
+            if (bombChance == 8 || bombChance == 9) // 20% chances that collectables is a bomb
+            {
+                // collectables is a bomb, destroy toons
+                KillToons(other);
+            }
+            else AddScore(other); // collectables is not a bomb
         }
+    }
+
+    void KillToons(Collider toon)
+    {
+        // step 1 : spawn effect when collided
+        Instantiate(collectablesEffect, transform.position, transform.rotation);
+
+        // step 2 : decrease score, destroy toons
+        Debug.Log("Collectables is a bomb..");
+        String name = toon.GetComponent<ProtoMove>().owner; // get the owner of the toon
+        int j = 0;
+        ProtoContrl ply = null;
+
+        foreach (ProtoContrl p in plyrs)
+        {
+            Debug.Log("Killed : " + plyrs[j].pname + " " + name);
+            if (plyrs[j].pname == name)
+            { // checking the name
+                ply = plyrs[j];
+            }
+            j++;
+
+        }
+
+        ply.playerScore -= changeScore; // subtract playerScore in ProtoContrl (total score stored there)
+        Debug.Log(ply.pname + " new score : " + ply.playerScore);
+
+        // step 3 : remove collectables
+        CmdDestroyGameObject(gameObject);
     }
 
     void AddScore(Collider toon)
@@ -67,7 +128,7 @@ public class Collectables : NetworkBehaviour {
                 
         }
 
-        ply.playerScore += increaseScore; // adding score to playerScore in ProtoContrl (total score stored there)
+        ply.playerScore += changeScore; // adding score to playerScore in ProtoContrl (total score stored there)
         Debug.Log(ply.pname + " new score : " + ply.playerScore);
 
         // step 3 : remove collectables from the game
