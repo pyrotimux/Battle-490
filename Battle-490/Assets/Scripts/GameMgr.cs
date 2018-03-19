@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 /// <summary>
 /// this only exists on the server. it handles all server calculations.
@@ -36,6 +37,21 @@ public class GameMgr : NetworkBehaviour {
 	void LateUpdate () {
         if (delayed) return;
 
+        GameObject[] go = GameObject.FindGameObjectsWithTag("score");
+
+        foreach (GameObject g in go)
+        {
+            if (g.name == "p1score")
+            {
+                g.GetComponent<Slider>().value = plyrs[0].playerScore;
+                Debug.Log(plyrs[0].playerScore);
+            }
+            else
+            {
+                g.GetComponent<Slider>().value = plyrs[1].playerScore;
+            }
+        }
+
         if (plyrs[i].myturn == false) { // if player finish the turn then we will let other player start.
             if (i + 1 == plyrs.Length) i = 0;  // circle back to first player
             else i++; // or go to next player
@@ -50,6 +66,7 @@ public class GameMgr : NetworkBehaviour {
                     t.canattack = true; t.canmove = true;
                     
                 }
+                
             }
         }
 
