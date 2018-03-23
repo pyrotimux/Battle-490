@@ -37,11 +37,24 @@ public class ProtoMove : NetworkBehaviour {
     [SyncVar]
     public Color pcolor = Color.red; // my toon color 
 
+    [SyncVar]
+    public int type = 1;
 
+    [SyncVar]
+    public int health = 100;
 
     // Use this for initialization
     void Start () {
         StartCoroutine(DelayStart(2));
+        string t = transform.name.Substring(4, 3);
+
+        if (t == "cpu") type = 3;
+        else if (t == "mem") type = 2;
+        
+    }
+
+    public Transform GetTransform() {
+        return transform;
     }
 
     // late init so it can be alive and gravity kicks in first.
@@ -66,11 +79,24 @@ public class ProtoMove : NetworkBehaviour {
             canbeattack = true;
             attackarea = col.gameObject;
         }
+        if (s.StartsWith("projectile")) {
+            ProjectileAcclerate projacc = col.GetComponent<ProjectileAcclerate>();
+            
+
+            if (projacc.owner != owner) {
+                Destroy(col.gameObject);
+                if(projacc.type >= type) health -= 50;
+            }
+            
+        }
     }
 
     // Update is called once per frame
     void LateUpdate () {
         if (delayed) return; // only start after init.
+
+        if (health <= 0) { NetworkServer.Destroy(gameObject); }
+
         if (!selected) // if i am selected then i am red or else i am set player color.
         {
             rend.material.color = Color.white;

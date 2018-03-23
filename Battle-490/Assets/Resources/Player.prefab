@@ -56,11 +56,16 @@ MonoBehaviour:
     type: 2}
   attackingarea: {fileID: 1977442637632702, guid: adb1b0d8311a14540a28a9243cc07ec9,
     type: 2}
+  areaset: 0
   toons:
   - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
   - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}
   - {fileID: 1511126989594428, guid: e0e1dddba87483543903e0312c50a2f6, type: 2}
   sltobj: {fileID: 0}
+  sltpm: {fileID: 0}
+  pbut: {fileID: 0}
+  playerScore: 0
+  projectile: {fileID: 1863647816258122, guid: 453403d74c860664ca831a7bd007ee30, type: 2}
   pname: Player 1
   pcolor: {r: 1, g: 1, b: 1, a: 1}
   myturn: 0

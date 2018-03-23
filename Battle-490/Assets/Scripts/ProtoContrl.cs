@@ -19,6 +19,7 @@ public class ProtoContrl : NetworkBehaviour {
     private bool setal = false;  // limit painting gui over and over again.
     public ProtoHandlers pbut;
     public int playerScore = 0; // save the player score here
+    public GameObject projectile;
 
 
     [SyncVar]
@@ -29,6 +30,7 @@ public class ProtoContrl : NetworkBehaviour {
 
     [SyncVar]
     public bool myturn = false; // define if player turn or not
+
 
     /// <summary>spawn toons</summary>
     /// <param name="pname"> takes player name </param>
@@ -51,13 +53,20 @@ public class ProtoContrl : NetworkBehaviour {
     {
         sltpm.moveto = hit;
     }
-
+    
 
     [Command]
     public void CmdAttack(Vector3 hit)
     {
-        sltpm.attacking = true;
-        sltpm.moveto = hit;
+        sltpm.canattack = false;
+        // sltpm.moveto = hit;
+        GameObject col = (GameObject)Instantiate(projectile, sltpm.GetTransform().position + transform.up * 1.0f, Quaternion.identity);
+        ProjectileAcclerate projacc = col.GetComponent<ProjectileAcclerate>();
+        projacc.owner = pname;
+        projacc.type = sltpm.type;
+        col.transform.LookAt(hit);
+        NetworkServer.Spawn(col);
+
     }
 
     /// <summary>select toons</summary>
@@ -246,7 +255,7 @@ public class ProtoContrl : NetworkBehaviour {
 
                         CmdAttack(temp);
 
-                        CmdDestroyGameObject(hitpm.gameObject);
+                        // CmdDestroyGameObject(hitpm.gameObject);
                     }
                     
                 }
