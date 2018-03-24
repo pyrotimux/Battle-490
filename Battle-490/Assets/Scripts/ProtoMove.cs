@@ -68,7 +68,14 @@ public class ProtoMove : NetworkBehaviour {
         rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
         toonAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.StartsWith("mutexprefab")) {
+            NetworkServer.Destroy(collision.gameObject);
+            GameObject.Find("SpawnMgr").GetComponent<SpawnMgr>().SpawnPlayer(transform, type, owner, pcolor);
+        }
+    }
 
     void OnTriggerEnter(Collider col)
     {

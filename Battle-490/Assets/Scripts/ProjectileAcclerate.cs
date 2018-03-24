@@ -11,13 +11,12 @@ public class ProjectileAcclerate : NetworkBehaviour
     [SyncVar]
     public int type = 1;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+    private void OnCollisionEnter(Collision collision){
+
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
         GetComponent<Rigidbody>().velocity = transform.forward * 6;
     }
 }
