@@ -13,6 +13,17 @@ public class GameMgr : NetworkBehaviour {
 
     public ProtoContrl[] plyrs;
     public bool delayed = true;
+    
+
+    public void GameOver() {
+        foreach (ProtoContrl player in plyrs)
+        {
+            player.gameover = true;
+
+        }
+    }
+
+
 
     /// <summary>delayed start by number of sec then init stuff.</summary>
     /// <param name="time"> wait till this time and run the method </param>
@@ -37,6 +48,16 @@ public class GameMgr : NetworkBehaviour {
 	void LateUpdate () {
         if (delayed) return;
 
+        foreach (ProtoContrl player in plyrs)
+        {
+            if (player.winning)
+            {
+                GameOver();
+                return;
+            }
+
+        }
+
         GameObject[] go = GameObject.FindGameObjectsWithTag("score");
 
         foreach (GameObject g in go)
@@ -51,6 +72,8 @@ public class GameMgr : NetworkBehaviour {
                 g.GetComponent<Slider>().value = plyrs[1].playerScore;
             }
         }
+
+        
 
         if (plyrs[i].myturn == false) { // if player finish the turn then we will let other player start.
             if (i + 1 == plyrs.Length) i = 0;  // circle back to first player

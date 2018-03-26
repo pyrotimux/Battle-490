@@ -8,8 +8,8 @@ public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
         // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
-    private int changeScore; // score that each collectables carry (10, 20, 30, 40 or 50)
-    private int randomizeScore;
+    public int score; // score that each collectables carry (10, 20, 30, 40 or 50)
+    public bool randomizeScore;
     private int bombChance; // random chances (collectables is a bomb or not)
     ProtoContrl[] plyrs;
 
@@ -19,29 +19,12 @@ public class Collectables : NetworkBehaviour {
         StartCoroutine(DelayStart(3)); // delay init.
 
         // get random number from 0 to 9
-        bombChance = UnityEngine.Random.Range(0, 10);
-        randomizeScore = UnityEngine.Random.Range(0, 10);
-
-        if (randomizeScore == 0 || randomizeScore == 1)
-        {
-            changeScore = 10;
+        if (randomizeScore) {
+            bombChance = UnityEngine.Random.Range(0, 10);
+            int rand = UnityEngine.Random.Range(1, 5);
+            score = rand * 10;
         }
-        else if (randomizeScore == 2 || randomizeScore == 3)
-        {
-            changeScore = 20;
-        }
-        else if (randomizeScore == 4 || randomizeScore == 5)
-        {
-            changeScore = 30;
-        }
-        else if (randomizeScore == 6 || randomizeScore == 7)
-        {
-            changeScore = 40;
-        }
-        else
-        {
-            changeScore = 50;
-        }
+        
     }
 
     public IEnumerator DelayStart(float time)
@@ -100,7 +83,7 @@ public class Collectables : NetworkBehaviour {
 
         }
 
-        ply.playerScore -= changeScore; // subtract playerScore in ProtoContrl (total score stored there)
+        ply.playerScore -= score; // subtract playerScore in ProtoContrl (total score stored there)
         Debug.Log(ply.pname + " new score : " + ply.playerScore);
 
         // step 3 : remove collectables
@@ -128,7 +111,7 @@ public class Collectables : NetworkBehaviour {
                 
         }
 
-        ply.playerScore += changeScore; // adding score to playerScore in ProtoContrl (total score stored there)
+        ply.playerScore += score; // adding score to playerScore in ProtoContrl (total score stored there)
         Debug.Log(ply.pname + " new score : " + ply.playerScore);
 
         // step 3 : remove collectables from the game

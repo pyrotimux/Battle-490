@@ -20,7 +20,10 @@ public class ProtoContrl : NetworkBehaviour {
     public ProtoHandlers pbut;
     public int playerScore = 0; // save the player score here
     public GameObject projectile;
+    public bool gameover = false;
 
+    [SyncVar]
+    public bool winning = false;
 
     [SyncVar]
     public string pname = "Player 1"; // network player name 
@@ -37,12 +40,14 @@ public class ProtoContrl : NetworkBehaviour {
     [Command]
     void CmdSpawn(string pname)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < toons.Length; i++)
         {
-            GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 * (i+1) + transform.up * 1, Quaternion.identity);
+            GameObject curtoon = (GameObject)Instantiate(toons[i], transform.position + transform.forward * 5 * (i+1) + transform.up * 5, Quaternion.identity);
             NetworkServer.Spawn(curtoon);
             ProtoMove m = curtoon.GetComponent<ProtoMove>();
             m.owner = pname; m.pcolor = pcolor;
+            
+
         }
     }
 
@@ -182,6 +187,11 @@ public class ProtoContrl : NetworkBehaviour {
     void Update () {
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
 
+        if (gameover) {
+            if(winning) Debug.Log("You Won!");
+            else Debug.Log("You Lose!");
+        }
+
         if (Input.GetButton("up")) //if we click on ui button move (?)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * 10);
@@ -245,15 +255,23 @@ public class ProtoContrl : NetworkBehaviour {
                 {
                     if (areaset) CmdDestroyMat(); // destroy previous spawn move areas
                     if (sltpm) CmdPlayerDeselected(); // deselect all toons
+
                     ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
 
                     if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
                         CmdPlayerSelected(hit.transform.gameObject); // then select that toon. 
                         
                     }else if((hitpm.owner != pname) && hitpm.canbeattack){
-                        Vector3 temp = hitpm.moveto;
+                        bool isBase = hit.transform.name.StartsWith("toonbase");
 
-                        CmdAttack(temp);
+                        if (isBase)
+                            if (playerScore >= 490) {
+                                winning = true;
+                                CmdAttack(hitpm.moveto);
+                            } else
+                                Debug.Log("You do not have enough power to destroy a base.");
+                        else if (!isBase)
+                            CmdAttack(hitpm.moveto);
 
                         // CmdDestroyGameObject(hitpm.gameObject);
                     }

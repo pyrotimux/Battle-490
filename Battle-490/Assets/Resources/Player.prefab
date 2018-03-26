@@ -61,13 +61,16 @@ MonoBehaviour:
   - {fileID: 1691947519051852, guid: b5becc7dbe941a04aa080127c736d49b, type: 2}
   - {fileID: 1599530465065198, guid: 5a28ac59a260bdb42bb18d607dd6077f, type: 2}
   - {fileID: 1511126989594428, guid: e0e1dddba87483543903e0312c50a2f6, type: 2}
+  - {fileID: 1765749606590326, guid: 4f1f0674c7ae00e4cae8c2268c06ffc0, type: 2}
   sltobj: {fileID: 0}
   sltpm: {fileID: 0}
   pbut: {fileID: 0}
   playerScore: 0
   projectile: {fileID: 1863647816258122, guid: 453403d74c860664ca831a7bd007ee30, type: 2}
+  gameover: 0
+  winning: 0
   pname: Player 1
-  pcolor: {r: 1, g: 1, b: 1, a: 1}
+  pcolor: {r: 0.08235294, g: 0.87411404, b: 1, a: 1}
   myturn: 0
 --- !u!114 &114673798784318110
 MonoBehaviour:
