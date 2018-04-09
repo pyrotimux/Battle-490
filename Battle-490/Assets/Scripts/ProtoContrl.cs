@@ -153,11 +153,12 @@ public class ProtoContrl : NetworkBehaviour {
     void Start () {
         if (isLocalPlayer) 
         {
-            // if i am local then i want a camera 
-            Camera.main.transform.position = this.transform.position;
-            Camera.main.transform.rotation = this.transform.rotation;
 
-            StartCoroutine(DelayCamAttach(2));
+            // if i am local then i want a camera 
+            //Camera.main.transform.position = this.transform.position;
+            //Camera.main.transform.rotation = this.transform.rotation;
+
+            // StartCoroutine(DelayCamAttach(2));
 
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
