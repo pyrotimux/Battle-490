@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 114796833282780954}
   - component: {fileID: 65889931931317462}
   m_Layer: 0
-  m_Name: laptop
+  m_Name: Laptop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,6 +248,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114244793051125784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,22 +263,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 234
-    i1: 116
-    i2: 5
-    i3: 104
-    i4: 112
-    i5: 13
-    i6: 234
-    i7: 4
-    i8: 200
-    i9: 62
-    i10: 240
-    i11: 142
-    i12: 133
-    i13: 72
-    i14: 244
-    i15: 116
+    i0: 35
+    i1: 1
+    i2: 113
+    i3: 149
+    i4: 86
+    i5: 135
+    i6: 176
+    i7: 68
+    i8: 121
+    i9: 28
+    i10: 251
+    i11: 1
+    i12: 13
+    i13: 168
+    i14: 230
+    i15: 46
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114760061312380982
@@ -306,6 +307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
     type: 2}
+  score: 0
+  randomizeScore: 0
 --- !u!137 &137926356878299994
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -319,6 +322,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 5b5a0a20c86ebda4faeb567349eb3916, type: 2}
   - {fileID: 2100000, guid: 33441e872453c814fa86ce3ad9e80cd5, type: 2}

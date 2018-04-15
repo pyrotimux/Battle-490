@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 114987999309243328}
   - component: {fileID: 65598638631749870}
   m_Layer: 0
-  m_Name: mouse
+  m_Name: Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +151,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 2198bd846105c524b99aa203e2b7164c, type: 2}
   m_StaticBatchInfo:
@@ -185,6 +186,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a29fa258453232143a63a865f0aa72d2, type: 3}
   m_StaticBatchInfo:
@@ -219,6 +221,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a29fa258453232143a63a865f0aa72d2, type: 3}
   m_StaticBatchInfo:
@@ -358,3 +361,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
     type: 2}
+  score: 0
+  randomizeScore: 0

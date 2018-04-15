@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 54354151679834362}
   - component: {fileID: 65814017408006604}
   m_Layer: 0
-  m_Name: collectprefab
+  m_Name: VintagePC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
