@@ -83,8 +83,16 @@ public class Collectables : NetworkBehaviour {
 
         }
 
-        ply.playerScore -= score; // subtract playerScore in ProtoContrl (total score stored there)
+        // subtracting playerScore in ProtoContrl (total score stored there)
+        ply.playerScore -= score; 
+        if (ply.playerScore < 0)
+        { // we don't want any player got negative score, so we reset it back to zero
+            ply.playerScore = 0;
+        }
         Debug.Log(ply.pname + " new score : " + ply.playerScore);
+
+        // destroying the toon that collected that bomb
+        // (???) forgot how lol, i'll do this in a bit (hilmi)
 
         // step 3 : remove collectables
         CmdDestroyGameObject(gameObject);

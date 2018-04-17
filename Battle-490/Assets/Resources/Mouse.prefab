@@ -362,4 +362,4 @@ MonoBehaviour:
   collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
     type: 2}
   score: 0
-  randomizeScore: 0
+  randomizeScore: 1

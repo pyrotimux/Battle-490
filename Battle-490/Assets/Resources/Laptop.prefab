@@ -238,7 +238,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1681567918044084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 17813e373c247bb4f9c7a0e75cd6a9dd, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -308,7 +308,7 @@ MonoBehaviour:
   collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
     type: 2}
   score: 0
-  randomizeScore: 0
+  randomizeScore: 1
 --- !u!137 &137926356878299994
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
