@@ -81,8 +81,7 @@ public class ProtoMove : NetworkBehaviour {
     {
         string s = col.gameObject.name; // name of the collider 
 
-        if (s.StartsWith("attack"))
-        {
+        if (s.StartsWith("attack")) {
             canbeattack = true;
             attackarea = col.gameObject;
         }
@@ -104,8 +103,7 @@ public class ProtoMove : NetworkBehaviour {
 
         if (health <= 0) { NetworkServer.Destroy(gameObject); }
 
-        if (!selected) // if i am selected then i am red or else i am set player color.
-        {
+        if (!selected) { // if i am selected then i am red or else i am set player color.
             rend.material.color = Color.white;
         }
         else {
@@ -115,13 +113,25 @@ public class ProtoMove : NetworkBehaviour {
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
         if (Vector3.Distance(transform.position, moveto) > 2f) {
-            if (attacking && canattack) { transform.LookAt(moveto); canattack = false; justset = true; toonAnim.SetBool("runBool", true); }
-            else if (canmove && !attacking) { transform.LookAt(moveto); canmove = false; justset = true; toonAnim.SetBool("runBool", true); }
+            if (attacking && canattack) {
+                transform.LookAt(moveto);
+                canattack = false;
+                justset = true;
+                toonAnim.SetBool("runBool", true);
+            }
+            else if (canmove && !attacking) {
+                transform.LookAt(moveto);
+                canmove = false;
+                justset = true;
+                toonAnim.SetBool("runBool", true);
+            }
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             
         }
-        else if(justset){
-            transform.position = new Vector3(moveto.x, 0, moveto.z); justset = false;
+        else if(justset) {
+            transform.position = new Vector3(moveto.x, 0, moveto.z);
+            justset = false;
+
             if (attacking) attacking = false;
             toonAnim.SetBool("runBool", false);
         }
