@@ -23,6 +23,7 @@ public class SpawnMgr : NetworkBehaviour {
 
     private void LateUpdate()
     {
+        // spawning collectables every 2000ms (..? dunno what the actual count unit is)
         if (countcol == 2000)
         {
             CmdCollectSpawn();
@@ -32,6 +33,7 @@ public class SpawnMgr : NetworkBehaviour {
             countcol++;
         }
 
+        // spawning multiplier (vintagePC)
         if (countmutx == 5000)
         {
             CmdSpCollectSpawn();

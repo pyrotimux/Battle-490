@@ -913,8 +913,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
     type: 2}
+  bombEffect: {fileID: 1772839309348482, guid: abf42663bb4f50949872c4869de5c134, type: 2}
   score: 0
   randomizeScore: 1
+  vintagePC: 0
 --- !u!114 &114777605028469588
 MonoBehaviour:
   m_ObjectHideFlags: 1
