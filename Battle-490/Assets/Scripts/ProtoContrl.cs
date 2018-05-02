@@ -192,13 +192,17 @@ public class ProtoContrl : NetworkBehaviour {
         if (gameover) {
             if (winning)
             {
-                Debug.Log("You Won!");
-                GameObject.Find("WinGameOver").SetActive(true);
+                // GameObject.Find("WinGameOver").SetActive(true);
+                canvas.SetActive(true);
+                canvas.transform.GetChild(9).gameObject.SetActive(true);
+                return;
             }
             else
             {
-                Debug.Log("You Lose!");
-                GameObject.Find("LoseGameOver").SetActive(true);
+                // GameObject.Find("LoseGameOver").SetActive(true);
+                canvas.SetActive(true);
+                canvas.transform.GetChild(10).gameObject.SetActive(true);
+                return;
             }
         }
 
