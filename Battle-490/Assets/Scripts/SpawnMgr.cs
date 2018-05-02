@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 
 public class SpawnMgr : NetworkBehaviour {
     public Transform[] spwnpos, mutexpos;
-    public GameObject collectprefab, mutexprefab;
+    public GameObject[] collectprefab; // collectables prefab (keyboard, monitor, laptop and mouse)
+    public GameObject mutexprefab; // multiplier (for getting new toon) prefab (VintagePC)
     public GameObject[] playerprefab;
     private int countcol = 0, countmutx = 0;
 
@@ -22,6 +23,7 @@ public class SpawnMgr : NetworkBehaviour {
 
     private void LateUpdate()
     {
+        // spawning collectables every 2000ms (..? dunno what the actual count unit is)
         if (countcol == 2000)
         {
             CmdCollectSpawn();
@@ -31,6 +33,7 @@ public class SpawnMgr : NetworkBehaviour {
             countcol++;
         }
 
+        // spawning multiplier (vintagePC)
         if (countmutx == 5000)
         {
             CmdSpCollectSpawn();
@@ -43,12 +46,14 @@ public class SpawnMgr : NetworkBehaviour {
 
     }
 
+    // spawn collectables (should be keyboard, laptop, monitor or mouse)
     [Command]
     public void CmdCollectSpawn() {
-        GameObject col = (GameObject)Instantiate(collectprefab, spwnpos[Random.Range(0,spwnpos.Length)].position, Quaternion.identity);
+        GameObject col = (GameObject)Instantiate(collectprefab[Random.Range(0, collectprefab.Length)], spwnpos[Random.Range(0, spwnpos.Length)].position, Quaternion.identity);
         NetworkServer.Spawn(col);
     }
 
+    // spawn new toon (multiplier) (should be VintagePC)
     [Command]
     public void CmdSpCollectSpawn()
     {

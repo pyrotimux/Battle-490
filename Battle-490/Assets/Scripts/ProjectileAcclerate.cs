@@ -11,7 +11,7 @@ public class ProjectileAcclerate : NetworkBehaviour
     [SyncVar]
     public int type = 1;
 
-    private void OnCollisionEnter(Collision collision){
+    private void OnCollisionEnter(Collision collision) {
 
     }
 

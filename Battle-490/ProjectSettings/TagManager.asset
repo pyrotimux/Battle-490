@@ -9,6 +9,7 @@ TagManager:
   - attackingarea
   - GameMgr
   - score
+  - scorevalue
   layers:
   - Default
   - TransparentFX

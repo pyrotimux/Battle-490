@@ -65,11 +65,20 @@ public class GameMgr : NetworkBehaviour {
             if (g.name == "p1score")
             {
                 g.GetComponent<Slider>().value = plyrs[0].playerScore;
-                Debug.Log(plyrs[0].playerScore);
+                Debug.Log(g.name + ": " + plyrs[0].playerScore);
+                /*
+                GameObject textscore = GameObject.FindGameObjectWithTag("scorevalue");
+                if (textscore.name == "p1scoreText")
+                {
+                    textscore.GetComponent<Text>().text = "" + plyrs[0].playerScore;
+                }
+                */
             }
             else
             {
                 g.GetComponent<Slider>().value = plyrs[1].playerScore;
+                Debug.Log(g.name + ": " + plyrs[1].playerScore);
+                //g.GetComponent<Text>().text = "" + plyrs[1].playerScore;
             }
         }
 

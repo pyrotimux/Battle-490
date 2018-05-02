@@ -7,9 +7,11 @@ using UnityEngine.Networking;
 public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
-        // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
+                                          // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
+    public GameObject bombEffect;
     public int score; // score that each collectables carry (10, 20, 30, 40 or 50)
     public bool randomizeScore;
+    public bool vintagePC; // vintagePC also use the same script but it won't ever be a bomb 
     private int bombChance; // random chances (collectables is a bomb or not)
     ProtoContrl[] plyrs;
 
@@ -18,8 +20,9 @@ public class Collectables : NetworkBehaviour {
         // delay to 3 to wait for GameMgr (deyaled 2) to prepare all the player first
         StartCoroutine(DelayStart(3)); // delay init.
 
-        // get random number from 0 to 9
-        if (randomizeScore) {
+        // if the collectable object is not VintagePC, get random number from 0 to 9
+        // if it is VintagePC, then we just gonna set the score to 25 in Unity
+        if (randomizeScore && !vintagePC) {
             bombChance = UnityEngine.Random.Range(0, 10);
             int rand = UnityEngine.Random.Range(1, 5);
             score = rand * 10;
@@ -64,7 +67,7 @@ public class Collectables : NetworkBehaviour {
     void KillToons(Collider toon)
     {
         // step 1 : spawn effect when collided
-        Instantiate(collectablesEffect, transform.position, transform.rotation);
+        Instantiate(bombEffect, transform.position, transform.rotation);
 
         // step 2 : decrease score, destroy toons
         Debug.Log("Collectables is a bomb..");
@@ -74,7 +77,7 @@ public class Collectables : NetworkBehaviour {
 
         foreach (ProtoContrl p in plyrs)
         {
-            Debug.Log("Killed : " + plyrs[j].pname + " " + name);
+            Debug.Log("Bomb collected by : " + plyrs[j].pname + " = " + name);
             if (plyrs[j].pname == name)
             { // checking the name
                 ply = plyrs[j];
@@ -83,8 +86,17 @@ public class Collectables : NetworkBehaviour {
 
         }
 
-        ply.playerScore -= score; // subtract playerScore in ProtoContrl (total score stored there)
+        // subtracting playerScore in ProtoContrl (total score stored there)
+        ply.playerScore -= score; 
+        if (ply.playerScore < 0)
+        { // we don't want any player got negative score, so we reset it back to zero
+            ply.playerScore = 0;
+        }
         Debug.Log(ply.pname + " new score : " + ply.playerScore);
+
+        // decrease the health of the toon that collected that bomb
+        toon.GetComponent<ProtoMove>().health -= score;
+        Debug.Log("Toon new health: " + toon.GetComponent<ProtoMove>().health);
 
         // step 3 : remove collectables
         CmdDestroyGameObject(gameObject);

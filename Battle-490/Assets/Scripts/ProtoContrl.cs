@@ -153,11 +153,12 @@ public class ProtoContrl : NetworkBehaviour {
     void Start () {
         if (isLocalPlayer) 
         {
-            // if i am local then i want a camera 
-            Camera.main.transform.position = this.transform.position;
-            Camera.main.transform.rotation = this.transform.rotation;
 
-            StartCoroutine(DelayCamAttach(2));
+            // if i am local then i want a camera 
+            //Camera.main.transform.position = this.transform.position;
+            //Camera.main.transform.rotation = this.transform.rotation;
+
+            //StartCoroutine(DelayCamAttach(2));
 
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
@@ -187,9 +188,18 @@ public class ProtoContrl : NetworkBehaviour {
     void Update () {
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
 
+        // activating the "You Win/You Lose" screen at the end of the game
         if (gameover) {
-            if(winning) Debug.Log("You Won!");
-            else Debug.Log("You Lose!");
+            if (winning)
+            {
+                Debug.Log("You Won!");
+                GameObject.Find("WinGameOver").SetActive(true);
+            }
+            else
+            {
+                Debug.Log("You Lose!");
+                GameObject.Find("LoseGameOver").SetActive(true);
+            }
         }
 
         if (Input.GetButton("up")) //if we click on ui button move (?)
@@ -212,7 +222,15 @@ public class ProtoContrl : NetworkBehaviour {
         }
 
         // if it's not my turn the dont show gui component.
-        if (!myturn) { canvas.SetActive(false); setal = false; return; } else if(!setal) {canvas.SetActive(true); setal = true; }
+        if (!myturn) {
+            canvas.SetActive(false);
+            setal = false;
+            return;
+        }
+        else if (!setal) {
+            canvas.SetActive(true);
+            setal = true;
+        }
 
 
         // if player press the endturn button then end player turn
@@ -259,9 +277,9 @@ public class ProtoContrl : NetworkBehaviour {
                     ProtoMove hitpm = hit.transform.GetComponent<ProtoMove>(); // get the new selected toon so i can compare
 
                     if (hitpm.owner == pname && (hitpm.canmove || hitpm.canattack)) { // if it is a toon that i can control
-                        CmdPlayerSelected(hit.transform.gameObject); // then select that toon. 
-                        
-                    }else if((hitpm.owner != pname) && hitpm.canbeattack){
+                        CmdPlayerSelected(hit.transform.gameObject); // then select that toon.  
+                    }
+                    else if((hitpm.owner != pname) && hitpm.canbeattack){
                         bool isBase = hit.transform.name.StartsWith("toonbase");
 
                         if (isBase)
@@ -280,8 +298,6 @@ public class ProtoContrl : NetworkBehaviour {
                 else if(hit.transform.name.StartsWith("moveablearea") && sltpm.canmove) // if i am clicking on moveable area and my toon can move
                 {
                     CmdMove(hit.point); // move the toon
-                    
-
                 }
                 CmdDestroyMat(); // destroy areas.
 
