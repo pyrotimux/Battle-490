@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198791864288775280}
   - component: {fileID: 199540234597510498}
   m_Layer: 0
-  m_Name: SmallExplodeEdited
+  m_Name: SmallExplodeEdited(Nope)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
