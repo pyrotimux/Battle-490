@@ -65,7 +65,7 @@ public class ProtoMove : NetworkBehaviour {
         delayed = false;
         moveto = transform.position;
         //gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = owner; // toon text properties
-        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = health.ToString(); // toon text properties
+        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "" + health; // toon text properties
         gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().color = pcolor; // toon text properties
         rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
         toonAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();
