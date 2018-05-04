@@ -3934,9 +3934,13 @@ MonoBehaviour:
   spwnpos:
   - {fileID: 1567498118}
   - {fileID: 1690530456}
+  - {fileID: 1654752285}
+  - {fileID: 1719171784}
   mutexpos:
   - {fileID: 1422030207}
   - {fileID: 1218420735}
+  - {fileID: 1949196424}
+  - {fileID: 1903074054}
   collectprefab:
   - {fileID: 1492098907275758, guid: dbe1d59b022e0d540bae38fc2ab301da, type: 2}
   - {fileID: 1681567918044084, guid: 230171955687b044791cfb010da8e62e, type: 2}
