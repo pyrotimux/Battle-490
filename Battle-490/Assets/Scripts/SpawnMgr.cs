@@ -23,8 +23,9 @@ public class SpawnMgr : NetworkBehaviour {
 
     private void LateUpdate()
     {
-        // spawning collectables every 2000ms (..? dunno what the actual count unit is)
-        if (countcol == 2000)
+        // spawning collectables every 600 frame (I think, coz Update got called every frame)
+        // 1 second should have ~60 frames (60 fps)
+        if (countcol == 600) // so this is around 10s
         {
             CmdCollectSpawn();
             countcol = 0;
@@ -34,7 +35,7 @@ public class SpawnMgr : NetworkBehaviour {
         }
 
         // spawning multiplier (vintagePC)
-        if (countmutx == 5000)
+        if (countmutx == 900) // and this is around 15s
         {
             CmdSpCollectSpawn();
             countmutx = 0;
