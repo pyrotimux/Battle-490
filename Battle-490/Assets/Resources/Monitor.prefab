@@ -305,7 +305,7 @@ Transform:
   m_GameObject: {fileID: 1356657679543162}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -32.180714, y: -0.7999999, z: 0.7211189}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4415574582249354}
   - {fileID: 4968631723737636}
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc807a75f5f23474c8e60ebf919f58f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectablesEffect: {fileID: 1231092699398064, guid: d44bc3be4f6280b40b7d857784f50de7,
+  collectablesEffect: {fileID: 1955734134661022, guid: 2bde96471c8ed53419495aec3f213a27,
     type: 2}
   bombEffect: {fileID: 1772839309348482, guid: abf42663bb4f50949872c4869de5c134, type: 2}
   score: 0

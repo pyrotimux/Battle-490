@@ -62,6 +62,8 @@ MonoBehaviour:
   - {fileID: 1467835972962888, guid: 78d4dfe836aaf084086318ceb639ec7f, type: 2}
   - {fileID: 1015195824210504, guid: d1d63d7aa715e8d439bb5e74068c5466, type: 2}
   - {fileID: 1333908086800864, guid: 30c5935e582ee754bb592e27703cb83b, type: 2}
+  - {fileID: 1467835972962888, guid: 78d4dfe836aaf084086318ceb639ec7f, type: 2}
+  - {fileID: 1467835972962888, guid: 78d4dfe836aaf084086318ceb639ec7f, type: 2}
   sltobj: {fileID: 0}
   sltpm: {fileID: 0}
   pbut: {fileID: 0}

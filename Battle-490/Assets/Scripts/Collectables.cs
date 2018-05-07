@@ -7,12 +7,11 @@ using UnityEngine.Networking;
 public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
-                                          // note : collectablesEffect = EffectExamples/FireExplosionEffect/Prefabs/SmallExplodeEdited.prefab
-    public GameObject bombEffect;
-    public int score; // score that each collectables carry (10, 20, 30, 40 or 50)
-    public bool randomizeScore;
+    public GameObject bombEffect; // different effect for bomb
+    public int score; // score that each collectables carry (50 to 90)
+    public bool randomizeScore; // vintagePC (new toon spawner) have final +25 points, others have random
     public bool vintagePC; // vintagePC also use the same script but it won't ever be a bomb 
-    private int bombChance; // random chances (collectables is a bomb or not)
+    private int bombChance; // random (20%) chances (collectables is a bomb or not)
     ProtoContrl[] plyrs;
 
     void Start()
@@ -23,9 +22,24 @@ public class Collectables : NetworkBehaviour {
         // if the collectable object is not VintagePC, get random number from 0 to 9
         // if it is VintagePC, then we just gonna set the score to 25 in Unity
         if (randomizeScore && !vintagePC) {
+
+            // get random number of 0 to 9 to create a 20% chances of collectable being a bomb
+            // the bomb gets random number 8 or 9
             bombChance = UnityEngine.Random.Range(0, 10);
-            int rand = UnityEngine.Random.Range(1, 5);
-            score = rand * 10;
+
+            if (bombChance == 8 || bombChance == 9) 
+            {
+                // if collectables is a bomb, then it can only carries damage 10 - 30
+                int rand = UnityEngine.Random.Range(1, 4);
+                score = rand * 10;
+            }
+            else
+            {
+                // if it's not a bomb, then it carries additional score of 50 to 90
+                int rand = UnityEngine.Random.Range(5, 10); 
+                score = rand * 10;
+            }
+            
         }
         
     }

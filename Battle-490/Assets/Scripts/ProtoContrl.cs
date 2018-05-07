@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 /// <summary>
 /// this class handles control protocol of players
@@ -194,15 +195,21 @@ public class ProtoContrl : NetworkBehaviour {
             {
                 // GameObject.Find("WinGameOver").SetActive(true);
                 canvas.SetActive(true);
-                canvas.transform.GetChild(9).gameObject.SetActive(true);
+                canvas.transform.GetChild(9).gameObject.SetActive(true); // WinGameOver
+
+                // get player's score and show it along the game over screen
+                canvas.transform.GetChild(11).gameObject.GetComponent<Text>().text = "FINAL SCORE : " + playerScore;
+                canvas.transform.GetChild(11).gameObject.SetActive(true); // finalscore
                 return;
             }
             else
             {
                 // GameObject.Find("LoseGameOver").SetActive(true);
                 canvas.SetActive(true);
-                canvas.transform.GetChild(10).gameObject.SetActive(true);
-                return;
+
+                // get player's score and show it along the game over screen
+                canvas.transform.GetChild(12).gameObject.GetComponent<Text>().text = "FINAL SCORE : " + playerScore;
+                canvas.transform.GetChild(12).gameObject.SetActive(true); // finalscore
             }
         }
 
