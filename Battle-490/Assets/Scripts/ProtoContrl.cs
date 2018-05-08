@@ -19,9 +19,11 @@ public class ProtoContrl : NetworkBehaviour {
     private GameObject canvas; // this show gui if it's my turn
     private bool setal = false;  // limit painting gui over and over again.
     public ProtoHandlers pbut;
-    public int playerScore = 0; // save the player score here
     public GameObject projectile;
     public bool gameover = false;
+
+    [SyncVar]
+    public int playerScore = 0; // save the player score here
 
     [SyncVar]
     public bool winning = false;
