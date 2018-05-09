@@ -169,6 +169,15 @@ public class ProtoContrl : NetworkBehaviour {
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
             pbut = GameObject.Find("pButtonHandler").GetComponent<ProtoHandlers>();
+
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); 
+            foreach (GameObject p in players)
+            {
+                ProtoContrl player = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
+                if (player.pname != pname)
+                    otherplayer = player;
+
+            }
         }
 
         
@@ -199,9 +208,9 @@ public class ProtoContrl : NetworkBehaviour {
 
         if (otherplayer)
             if (otherplayer.pname.Equals("Player1"))
-                canvas.transform.GetChild(2).GetComponent<Slider>().value = playerScore;
+                canvas.transform.GetChild(2).GetComponent<Slider>().value = otherplayer.playerScore;
             else
-                canvas.transform.GetChild(3).GetComponent<Slider>().value = playerScore;
+                canvas.transform.GetChild(3).GetComponent<Slider>().value = otherplayer.playerScore; 
     }
 
     // Update is called once per frame

@@ -39,8 +39,6 @@ public class GameMgr : NetworkBehaviour {
             plyrs[j++] = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
 
         }
-        plyrs[0].otherplayer = plyrs[1];
-        plyrs[1].otherplayer = plyrs[0];
 
 
     }
