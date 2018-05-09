@@ -20,6 +20,8 @@ public class ProtoContrl : NetworkBehaviour {
     private bool setal = false;  // limit painting gui over and over again.
     public ProtoHandlers pbut;
     public GameObject projectile;
+
+    [SyncVar]
     public bool gameover = false;
 
     [SyncVar]
@@ -189,6 +191,12 @@ public class ProtoContrl : NetworkBehaviour {
 
     // Update is called once per frame
     void Update () {
+        // update score bar
+        if (pname.Equals("Player 1"))
+            canvas.transform.GetChild(2).GetComponent<Slider>().value = playerScore;
+        else
+            canvas.transform.GetChild(3).GetComponent<Slider>().value = playerScore;
+
         if (!isLocalPlayer) return; // if i am not local player then get out of here.
 
         // activating the "You Win/You Lose" screen at the end of the game
@@ -214,6 +222,8 @@ public class ProtoContrl : NetworkBehaviour {
                 canvas.transform.GetChild(12).gameObject.SetActive(true); // finalscore
             }
         }
+
+        
 
         if (Input.GetButton("up")) //if we click on ui button move (?)
         {

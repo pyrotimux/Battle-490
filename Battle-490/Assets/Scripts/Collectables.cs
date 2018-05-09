@@ -8,7 +8,7 @@ public class Collectables : NetworkBehaviour {
 
     public GameObject collectablesEffect; // effect for when any toons hit it
     public GameObject bombEffect; // different effect for bomb
-    public int score; // score that each collectables carry (50 to 90)
+    public int score; // score that each collectables carry (100 to 200)
     public bool randomizeScore; // vintagePC (new toon spawner) have final +25 points, others have random
     public bool vintagePC; // vintagePC also use the same script but it won't ever be a bomb 
     private int bombChance; // random (20%) chances (collectables is a bomb or not)
@@ -35,8 +35,8 @@ public class Collectables : NetworkBehaviour {
             }
             else
             {
-                // if it's not a bomb, then it carries additional score of 50 to 90
-                int rand = UnityEngine.Random.Range(5, 10); 
+                // if it's not a bomb, then it carries additional score of 100 to 200
+                int rand = UnityEngine.Random.Range(10, 20); 
                 score = rand * 10;
             }
             

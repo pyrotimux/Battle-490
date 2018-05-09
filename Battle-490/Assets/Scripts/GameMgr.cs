@@ -57,7 +57,8 @@ public class GameMgr : NetworkBehaviour {
             }
 
         }
-
+        /*
+         * 
         GameObject[] go = GameObject.FindGameObjectsWithTag("score");
 
         foreach (GameObject g in go)
@@ -66,13 +67,13 @@ public class GameMgr : NetworkBehaviour {
             {
                 g.GetComponent<Slider>().value = plyrs[0].playerScore;
                 Debug.Log(g.name + ": " + plyrs[0].playerScore);
-                /*
+                
                 GameObject textscore = GameObject.FindGameObjectWithTag("scorevalue");
                 if (textscore.name == "p1scoreText")
                 {
                     textscore.GetComponent<Text>().text = "" + plyrs[0].playerScore;
                 }
-                */
+                
             }
             else
             {
@@ -82,7 +83,7 @@ public class GameMgr : NetworkBehaviour {
             }
         }
 
-        
+        */
 
         if (plyrs[i].myturn == false) { // if player finish the turn then we will let other player start.
             if (i + 1 == plyrs.Length) i = 0;  // circle back to first player

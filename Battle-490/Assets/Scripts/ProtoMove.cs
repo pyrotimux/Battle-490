@@ -119,7 +119,7 @@ public class ProtoMove : NetworkBehaviour {
 
         // if i am far from where i am moving to then look at it and keep moving. 
         // once i am close enough then froce set the position. 
-        if (Vector3.Distance(transform.position, moveto) > 2f) {
+        if (Vector3.Distance(transform.position, moveto) > 5f) {
             if (attacking && canattack) {
                 transform.LookAt(moveto);
                 canattack = false;
@@ -132,6 +132,7 @@ public class ProtoMove : NetworkBehaviour {
                 justset = true;
                 toonAnim.SetBool("runBool", true);
             }
+            transform.LookAt(moveto);
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             
         }
