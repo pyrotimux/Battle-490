@@ -19,6 +19,7 @@ public class GameMgr : NetworkBehaviour {
         foreach (ProtoContrl player in plyrs)
         {
             player.gameover = true;
+            player.myturn = true;
 
         }
     }

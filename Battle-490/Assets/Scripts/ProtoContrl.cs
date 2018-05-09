@@ -192,7 +192,7 @@ public class ProtoContrl : NetworkBehaviour {
     // Update is called once per frame
     void Update () {
         // update score bar
-        if (pname.Equals("Player 1"))
+        if (pname.Equals("Player1"))
             canvas.transform.GetChild(2).GetComponent<Slider>().value = playerScore;
         else
             canvas.transform.GetChild(3).GetComponent<Slider>().value = playerScore;
@@ -216,6 +216,7 @@ public class ProtoContrl : NetworkBehaviour {
             {
                 // GameObject.Find("LoseGameOver").SetActive(true);
                 canvas.SetActive(true);
+                canvas.transform.GetChild(10).gameObject.SetActive(true); // WinGameOver
 
                 // get player's score and show it along the game over screen
                 canvas.transform.GetChild(12).gameObject.GetComponent<Text>().text = "FINAL SCORE : " + playerScore;

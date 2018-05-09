@@ -14,6 +14,7 @@ public class ProtoMove : NetworkBehaviour {
     GameObject attackarea = null; // for trigger check
     Renderer rend;
     Animator toonAnim;
+    TextMesh healthText;
 
     [SyncVar]
     public Vector3 moveto; // tell toons where to go 
@@ -65,7 +66,8 @@ public class ProtoMove : NetworkBehaviour {
         delayed = false;
         moveto = transform.position;
         //gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = owner; // toon text properties
-        gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "" + health; // toon text properties
+        healthText = gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>();
+        healthText.text = "" + health; // toon text properties
         gameObject.transform.GetChild(1).gameObject.GetComponent<TextMesh>().color = pcolor; // toon text properties
         rend = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
         toonAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();
@@ -91,7 +93,7 @@ public class ProtoMove : NetworkBehaviour {
             ProjectileAcclerate projacc = col.GetComponent<ProjectileAcclerate>();
 
             if (projacc.owner != owner) {
-                Destroy(col.gameObject);
+                NetworkServer.Destroy(col.gameObject);
                 if (projacc.type >= type) {
                     // health got decreased by 50 if toon got shot by projectile
                     // (only toon of same or higher type can do damage)
@@ -109,6 +111,8 @@ public class ProtoMove : NetworkBehaviour {
         if (health <= 0) {
             NetworkServer.Destroy(gameObject);
         }
+
+        healthText.text = "" + health;
 
         if (!selected) { // if i am selected then i am red or else i am set player color.
             rend.material.color = Color.white;
