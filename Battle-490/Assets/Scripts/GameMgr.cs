@@ -37,7 +37,11 @@ public class GameMgr : NetworkBehaviour {
         plyrs = new ProtoContrl[players.Length]; // init array with lenght of total player
         foreach(GameObject p in players) {
             plyrs[j++] = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
+
         }
+        plyrs[0].otherplayer = plyrs[1];
+        plyrs[1].otherplayer = plyrs[0];
+
 
     }
     // Use this for initialization
