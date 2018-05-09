@@ -164,20 +164,13 @@ public class ProtoContrl : NetworkBehaviour {
             //Camera.main.transform.position = this.transform.position;
             //Camera.main.transform.rotation = this.transform.rotation;
 
-            //StartCoroutine(DelayCamAttach(2));
+            StartCoroutine(DelayStart(2));
 
             CmdSpawn(pname); // then ask the server to spawn toons for me.
             canvas = GameObject.Find("Canvas");
             pbut = GameObject.Find("pButtonHandler").GetComponent<ProtoHandlers>();
 
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); 
-            foreach (GameObject p in players)
-            {
-                ProtoContrl player = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
-                if (player.pname != pname)
-                    otherplayer = player;
-
-            }
+            
         }
 
         
@@ -190,12 +183,21 @@ public class ProtoContrl : NetworkBehaviour {
 
     }
 
-    public IEnumerator DelayCamAttach(float time)
+    public IEnumerator DelayStart(float time)
     {
         yield return new WaitForSeconds(time);
 
-        transform.rotation = Quaternion.EulerRotation(0, Camera.main.transform.rotation.y, 0);
-        Camera.main.transform.parent = this.transform;
+        //transform.rotation = Quaternion.EulerRotation(0, Camera.main.transform.rotation.y, 0);
+        //Camera.main.transform.parent = this.transform;
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in players)
+        {
+            ProtoContrl player = p.GetComponent<ProtoContrl>(); // get all the proto control and save it in array.
+            if (player.pname != pname)
+                otherplayer = player;
+
+        }
 
     }
 
